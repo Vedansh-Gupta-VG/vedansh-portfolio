@@ -4,6 +4,14 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 
+/* Kills the default blue/grey highlight box mobile browsers flash over
+   tappable elements (links, buttons) on touch. It's a leftover from
+   early mobile Safari/Chrome and clashes with our own hover/active
+   states, which already give clear tap feedback. */
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: var(--nav-scroll-offset);

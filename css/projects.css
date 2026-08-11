@@ -242,6 +242,7 @@
   overflow: hidden;
   transform: scale(0.94) translateY(10px);
   opacity: 0;
+  will-change: transform, opacity;
   transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease);
 }
 .modal-overlay.is-open .explorer { transform: scale(1) translateY(0); opacity: 1; }
@@ -358,6 +359,7 @@
   overflow: hidden;
   transform: scale(0.94) translateY(10px);
   opacity: 0;
+  will-change: transform, opacity;
   transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease);
 }
 .modal-overlay.is-open .pmodal { transform: scale(1) translateY(0); opacity: 1; }

@@ -5,6 +5,7 @@
    ========================================================================== */
 
 .modal-overlay {
+  will-change: opacity;
   position: fixed;
   inset: 0;
   z-index: 2000;
@@ -39,6 +40,7 @@ body.modal-open { overflow: hidden; }
   overflow: hidden;
   transform: scale(0.94) translateY(10px);
   opacity: 0;
+  will-change: transform, opacity;
   transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease), box-shadow var(--dur-fast) var(--ease);
 }
 .modal:hover {
@@ -141,4 +143,11 @@ button[data-modal-close].btn-outline:hover {
 
 @media (max-width: 640px) {
   .modal { max-height: 92vh; }
+}
+
+@media (max-width: 768px) {
+  .modal-overlay {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+  }
 }

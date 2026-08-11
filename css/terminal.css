@@ -14,6 +14,7 @@
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), var(--glow-lime);
   transform: scale(0.95) translateY(8px);
   opacity: 0;
+  will-change: transform, opacity;
   transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease), box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease), background var(--dur-med) var(--ease);
   overflow: hidden;
 }

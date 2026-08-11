@@ -17,7 +17,12 @@ document.addEventListener('click', (e) => {
   if (!trigger) return;
   if (typeof window.spawnShootingStarAt !== 'function') return;
 
+  // The starfield canvas is a fixed viewport-sized backdrop (see
+  // js/atmosphere.js), so coordinates here are plain viewport
+  // coordinates — not document/scroll coordinates — and this is
+  // genuinely random across the whole visible screen, unrelated to
+  // whatever was actually clicked.
   const randomX = Math.random() * window.innerWidth;
-  const randomY = window.scrollY + Math.random() * window.innerHeight;
+  const randomY = Math.random() * window.innerHeight;
   window.spawnShootingStarAt(randomX, randomY);
 });
