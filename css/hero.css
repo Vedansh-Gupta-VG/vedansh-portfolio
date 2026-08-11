@@ -286,6 +286,35 @@
 
 }
 
+/* Chrome's "Request desktop site" reports a logical width around 980px
+   regardless of the actual phone — it lands in the same 561-1024px
+   range as a real tablet above, but the device underneath it is tall
+   and narrow (aspect ratio ~2:1), never squarish like an iPad. That
+   mismatch is what the aspect-ratio condition below isolates: it only
+   matches that specific case, so real tablets (aspect ~4:3) are
+   unaffected. Astronaut is brought back down and text becomes
+   width-responsive again instead of a fixed size that reads as tiny at
+   980px wide. */
+@media (min-width: 561px) and (max-width: 1024px) and (min-aspect-ratio: 1/1.6) {
+  .hero {
+    padding-top: calc(var(--nav-height) + 1.5rem);
+  }
+  .hero__layout {
+    gap: 2rem;
+  }
+  .hero__astro {
+    height: clamp(16vh, 18vh, 22vh);
+    margin-bottom: 0.5rem;
+  }
+  .hero__greeting { font-size: clamp(1.05rem, 2.6vw, 1.3rem); }
+  .hero__name { font-size: clamp(2.8rem, 8vw, 4.8rem); }
+  .hero__typewriter { font-size: clamp(1.3rem, 4.4vw, 1.9rem); }
+  .hero__headline { font-size: clamp(1.1rem, 3.6vw, 1.5rem); }
+  .hero__ctas .btn { padding: 1rem 1.9rem; font-size: 1rem; }
+  .social-rail__icons a { width: 40px; height: 40px; }
+  .social-rail__icons svg { width: 32px; height: 32px; }
+}
+
 @media (max-width: 560px) {
   .hero__ctas { flex-direction: column; align-items: stretch; }
   .hero__ctas .btn { justify-content: center; }
