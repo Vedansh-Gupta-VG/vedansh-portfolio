@@ -1,0 +1,124 @@
+/* ==========================================================================
+   DESIGN TOKENS
+   Single source of truth for colors, type, spacing, radii, shadows.
+   Every section file should reuse these — never hardcode a color/size.
+   ========================================================================== */
+
+:root {
+  /* --- Core backgrounds --- */
+  --bg-void: #05070a;
+  --bg-navy: #0a0f16;
+  --bg-panel: rgba(15, 20, 28, 0.55);
+  --bg-panel-solid: #0d131b;
+
+  /* --- Atmosphere accent colors (space / nebula / foliage) --- */
+  --neb-green: rgba(46, 196, 120, 0.16);
+  --neb-teal: rgba(45, 170, 190, 0.14);
+  --neb-purple: rgba(120, 90, 200, 0.13);
+  --neb-blue: rgba(40, 90, 170, 0.15);
+
+  /* --- Accent colors (mapped to spec's category colors) --- */
+  --lime: #79ef75;          /* primary neon green */
+  --lime-soft: rgba(121, 239, 117, 0.15);
+  --cyan: #6fe3f0;
+  --blue: #6fa8ff;
+  --purple: #b98bff;
+  --gold: #f0c96f;
+  --pink: #f08bd0;
+  --orange: #f0a86f;
+
+  /* --- Text --- */
+  --text-primary: #f4f6f8;
+  --text-secondary: #a8b2bd;
+  --text-muted: #6b7480;
+
+  /* --- Borders / glass --- */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-lime: rgba(121, 239, 117, 0.35);
+  --glass-blur: 14px;
+
+  /* --- Type scale --- */
+  --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --font-body: 'Inter', 'Segoe UI', sans-serif;
+
+  --fs-hero: clamp(2.5rem, 6vw, 4.5rem);
+  --fs-h1: clamp(2rem, 4vw, 3rem);
+  --fs-h2: clamp(1.5rem, 3vw, 2rem);
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-label: 0.8rem;
+
+  /* --- Spacing scale (8px base) --- */
+  --sp-1: 0.5rem;
+  --sp-2: 1rem;
+  --sp-3: 1.5rem;
+  --sp-4: 2rem;
+  --sp-5: 3rem;
+  --sp-6: 4rem;
+  --sp-7: 6rem;
+
+  /* --- Radii --- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+
+  /* --- Shadows / glow --- */
+  --glow-lime: 0 0 24px rgba(121, 239, 117, 0.25);
+  --glow-blue: 0 0 24px rgba(111, 168, 255, 0.25);
+  --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.35);
+
+  /* --- Motion --- */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 0.2s;
+  --dur-med: 0.4s;
+  --fast: 0.2s;
+  --nav-dur: 0.5s;
+  --nav-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* --- Nav-specific aliases (so the navbar.css component drops in as-is) --- */
+  --nav-edge: clamp(1rem, 4vw, 2.5rem);
+  --nav-glass: rgba(10, 15, 22, 0.55);
+  --line: var(--border-subtle);
+  --nav-text: var(--text-secondary);
+  --white: var(--text-primary);
+  --text-dim: var(--text-secondary);
+
+  /* --- Layout ---
+     --nav-height reflects the actual floating pill (16px top offset +
+     ~46px of its own height at rest) so anything computed from it
+     stays accurate if the pill's own padding/font-size ever changes. */
+  --content-max: 1440px;
+  --nav-height: 64px;
+  --nav-height-scrolled: 56px;
+
+  /* --- Section rhythm: single source of truth for vertical spacing,
+     shared by every major section (Hero excluded — it's a special
+     full-screen landing section sized on its own in hero.css).
+     --section-pad-top clears the fixed floating nav pill; the gap the
+     user actually perceives between two sections is
+     --section-pad-bottom (end of section A) + --section-pad-top
+     (start of section B) — always the same seam everywhere.
+     --nav-scroll-offset positions the section so that its *content*
+     (heading/eyebrow, not the section edge) lands just below the nav
+     pill when navigating via anchor links. Since each section has
+     --section-pad-top of internal padding, the offset only needs to
+     clear the nav pill minus that padding. */
+  --nav-scroll-offset: 16px;
+  --section-pad-top: 72px;
+  --section-pad-bottom: var(--sp-5);
+  --section-pad-top-mobile: var(--sp-5);
+  --section-pad-bottom-mobile: var(--sp-5);
+
+  /* --- Modal compact spacing (shared across ALL modal/explorer/viewer variants) --- */
+  --modal-pad-x: 1.25rem;
+  --modal-header-py: 0.7rem;
+  --modal-footer-py: 0.6rem;
+  --modal-body-py: 0.85rem;
+
+  /* --- Card elevation system (used everywhere instead of one-off shadows) --- */
+  --shadow-1: 0 4px 16px rgba(0, 0, 0, 0.28);
+  --shadow-1-hover: 0 14px 34px rgba(0, 0, 0, 0.4);
+  --hover-lift: -6px;
+}

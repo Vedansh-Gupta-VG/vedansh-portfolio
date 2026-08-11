@@ -1,0 +1,291 @@
+/* ==========================================================================
+   HERO SECTION
+   Layout: [social-rail] [text content] [astronaut] as three normal flex
+   items in one row. No absolute positioning for the rail — it simply
+   sits in the flow next to the text, so it can't drift or overlap the
+   nav at any screen size.
+   ========================================================================== */
+
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero__layout {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  width: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.hero__inner {
+  flex: 1 1 480px;
+  max-width: 640px;
+}
+
+/* --- Astronaut illustration --- */
+.hero__astro {
+  flex: 1 1 380px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  padding-right: clamp(0rem, 3vw, 2rem);
+  pointer-events: none; /* Prevents overlapping bounds from blocking clicks */
+}
+/* display:contents removes <picture> from the layout box tree so the <img>
+   inside sizes exactly as if <picture> weren't there (see the matching
+   comment in achievements.css for the full explanation of why this is
+   needed once an img is wrapped in <picture> for WebP support). */
+.hero__astro picture {
+  display: contents;
+}
+
+/* Glow disc behind the astronaut gives the right-hand side visual
+   weight instead of a lone small image floating in empty space.
+   (Previously missing an explicit position, so it defaulted to the
+   top-left corner and rendered as a visible box — fixed by centering
+   it with inset:0 + margin:auto.) */
+.hero__astro::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: min(65%, 320px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(111, 200, 240, 0.16), rgba(111, 227, 240, 0.06) 55%, transparent 75%);
+  filter: blur(10px);
+  z-index: 0;
+}
+
+.hero__astro svg,
+.hero__astro img {
+  width: min(100%, 460px);
+  height: auto;
+  position: relative;
+  z-index: 1;
+  animation: astroFloat 9s ease-in-out infinite;
+  filter: drop-shadow(0 25px 45px rgba(0, 0, 0, 0.55));
+  pointer-events: auto;
+  transition: scale var(--dur-med) var(--ease), filter var(--dur-med) var(--ease);
+}
+.hero__astro svg:hover,
+.hero__astro img:hover {
+  scale: 1.04;
+  filter: drop-shadow(0 25px 55px rgba(111, 227, 240, 0.35));
+}
+
+@keyframes astroFloat {
+  0%   { transform: translate(0, 0) rotate(-3deg); }
+  25%  { transform: translate(10px, -16px) rotate(2deg); }
+  50%  { transform: translate(-6px, -28px) rotate(-1deg); }
+  75%  { transform: translate(-14px, -10px) rotate(3deg); }
+  100% { transform: translate(0, 0) rotate(-3deg); }
+}
+
+.hero__greeting {
+  font-family: var(--font-mono);
+  color: var(--lime);
+  font-size: var(--fs-label);
+  margin-bottom: 0.4rem;
+}
+
+.hero__name {
+  font-family: var(--font-display);
+  font-size: clamp(2.1rem, 4.4vw, 3.4rem);
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.08;
+  margin: 0 0 0.6rem;
+  color: var(--text-primary);
+}
+
+.hero__typewriter {
+  font-family: var(--font-mono);
+  font-size: clamp(1.05rem, 2.2vw, 1.4rem);
+  color: var(--cyan);
+  min-height: 1.6em;
+  margin-bottom: 0.9rem;
+}
+
+.hero__typewriter .cursor {
+  display: inline-block;
+  width: 2px;
+  background: var(--lime);
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink { 50% { opacity: 0; } }
+
+.hero__headline {
+  max-width: 520px;
+  font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+  color: var(--text-secondary);
+  margin-bottom: var(--sp-4);
+}
+
+.hero__ctas {
+  display: flex;
+  gap: var(--sp-3);
+  flex-wrap: wrap;
+}
+
+/* --- Social rail: thin vertical line + icons, sitting in normal flow
+   next to the text with its own breathing room so it never touches
+   the headline/CTAs beside it --- */
+.social-rail {
+  flex: 0 0 auto;
+  width: 2px;
+  height: 230px;
+  margin-right: clamp(1.75rem, 3vw, 2.75rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.social-rail::before,
+.social-rail::after {
+  content: "";
+  flex: 1;
+  width: 1px;
+  background: var(--border-subtle);
+}
+
+.social-rail__dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 8px var(--lime);
+  flex-shrink: 0;
+}
+
+.social-rail__icons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+  padding: var(--sp-2) 0;
+}
+
+.social-rail__icons a,
+.social-rail__icons .rail-icon {
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  position: relative;
+  transition: color var(--dur-fast) var(--ease), filter var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+
+.social-rail__icons svg { width: 22px; height: 22px; }
+
+.social-rail__icons a:hover,
+.social-rail__icons .rail-icon:hover {
+  color: var(--lime);
+  transform: translateY(-2px);
+  filter: drop-shadow(0 0 6px rgba(121, 239, 117, 0.6));
+}
+
+
+
+/* --- Portrait Mobile & Tablets (3:4, 4:3, phones) --- */
+@media (max-width: 1024px) {
+  .hero { 
+    min-height: 100vh;
+    min-height: 100dvh;
+    padding-top: calc(var(--nav-height) + 1.5rem);
+    padding-bottom: 2.5rem; 
+    justify-content: space-evenly; 
+  }
+  .hero__layout { 
+    flex-direction: column; 
+    align-items: center; 
+    text-align: center; 
+    gap: 2rem; 
+  }
+  .hero__inner { 
+    flex: none; 
+    order: 1; 
+    max-width: 640px; 
+    margin: 0 auto; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .hero__greeting { margin-bottom: 0.4rem; }
+  .hero__name { margin-bottom: 0.4rem; font-size: clamp(1.8rem, 7vw, 4rem); }
+  .hero__typewriter { margin-bottom: 1rem; font-size: clamp(0.9rem, 4vw, 1.4rem); }
+  .hero__headline { margin-bottom: 1.5rem; font-size: clamp(0.9rem, 3.5vw, 1.3rem); max-width: 500px; line-height: 1.5; }
+  .hero__ctas { justify-content: center; margin-bottom: 0; }
+
+  .hero__astro { 
+    flex: none; 
+    order: -1; 
+    width: 100%; 
+    height: clamp(22vh, 26vh, 32vh); /* Reduced size */
+    justify-content: center; 
+    padding-right: 0; 
+    margin-bottom: 0;
+    position: relative;
+  }
+  .hero__astro svg,
+  .hero__astro img { 
+    height: 100%; 
+    width: auto; 
+    max-width: 90%; 
+    object-fit: contain; 
+  }
+  .hero__astro::before { 
+    width: 70%; 
+    height: 70%; 
+    background: radial-gradient(circle, rgba(111, 200, 240, 0.25), rgba(111, 227, 240, 0.08) 50%, transparent 70%);
+  }
+
+  /* Horizontal icon row */
+  .social-rail {
+    order: 2;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    margin: 0;
+    padding-top: 1rem;
+    border-top: none;
+  }
+  .social-rail::before,
+  .social-rail::after { display: none; }
+  .social-rail__dot { display: none; }
+  .social-rail__icons { flex-direction: row; gap: 2rem; padding: 0; }
+  .social-rail__icons a { width: 34px; height: 34px; }
+  .social-rail__icons svg { width: 28px; height: 28px; }
+}
+
+@media (min-width: 561px) and (max-width: 1024px) {
+  /* For 3:4 and 4:3 portrait tablets like iPad Pro */
+  .hero__layout {
+    gap: 3rem; /* More space to feel occupied */
+  }
+  .hero__astro {
+    height: clamp(32vh, 38vh, 44vh); /* Increased for large tablets to fill space */
+  }
+  .hero__name {
+    font-size: 3.8rem;
+  }
+
+}
+
+@media (max-width: 560px) {
+  .hero__ctas { flex-direction: column; align-items: stretch; }
+  .hero__ctas .btn { justify-content: center; }
+}

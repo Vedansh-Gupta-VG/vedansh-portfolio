@@ -1,0 +1,16 @@
+{
+  "name": "vedansh-portfolio",
+  "version": "1.0.0",
+  "description": "Vedansh Gupta's personal developer portfolio — single-page site, plain HTML/CSS/JS.",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "keywords": [],
+  "author": "Vedansh Gupta",
+  "license": "ISC",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.3",
+    "esbuild": "^0.28.2"
+  }
+}
+

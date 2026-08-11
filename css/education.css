@@ -1,0 +1,333 @@
+/* ==========================================================================
+   EDUCATION SECTION
+   Left: eyebrow/heading + a vertical timeline built exactly like the
+   Experience timeline (dashed track + scroll-linked fill + active-node
+   glow), with two compact glass cards, college then school. Right: the
+   graduation illustration centered inside two thin, intentionally
+   incomplete orbit rings, with the black-hole video sitting further
+   back in the top-right corner as an ambient backdrop element.
+   ========================================================================== */
+
+#education .eyebrow { margin-bottom: 0.4rem; }
+#education .section-heading { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin-bottom: 0.5rem; }
+#education .section-desc { margin-bottom: var(--sp-4); font-size: 0.92rem; }
+
+.edu-layout {
+  display: grid;
+  grid-template-columns: minmax(320px, 460px) 1fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+}
+
+.edu-left { min-width: 0; }
+
+/* --- Timeline: same structure/behaviour as Experience --- */
+.edu-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  row-gap: var(--sp-2);
+  column-gap: calc(var(--sp-3) + 14px);
+  align-items: start;
+}
+
+.edu-timeline__track {
+  position: absolute;
+  top: 22px;
+  left: 21px;
+  width: 2px;
+  height: 0;
+  background: linear-gradient(180deg, rgba(121, 239, 117, 0.3) 0%, rgba(111, 168, 255, 0.3) 100%);
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+}
+
+.edu-timeline__fill {
+  position: absolute;
+  top: 22px;
+  left: 21px;
+  width: 2px;
+  height: 0%;
+  background: linear-gradient(180deg, var(--lime) 0%, var(--blue) 100%);
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+  transition: height 0.15s linear;
+  box-shadow: 0 0 10px rgba(121, 239, 117, 0.5);
+}
+
+.edu-timeline__node {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-panel-solid);
+  flex-shrink: 0;
+  transition: box-shadow var(--dur-med) var(--ease), border-color var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+}
+
+.edu-timeline__node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  width: calc(var(--sp-3) + 14px + 1px);
+  height: 2px;
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.edu-timeline__node--college { border: 2px solid var(--lime); color: var(--lime); box-shadow: 0 0 10px rgba(121, 239, 117, 0.15); }
+.edu-timeline__node--school { border: 2px solid var(--blue); color: var(--blue); box-shadow: 0 0 10px rgba(111, 168, 255, 0.15); }
+
+.edu-timeline__node--college.is-active { box-shadow: 0 0 20px rgba(121, 239, 117, 0.4); border-color: var(--lime); }
+.edu-timeline__node--school.is-active { box-shadow: 0 0 20px rgba(111, 168, 255, 0.4); border-color: var(--blue); }
+
+.edu-timeline__node:hover { animation: eduNodePulse 1.4s ease-in-out infinite; }
+
+@keyframes eduNodePulse {
+  0%, 100% { box-shadow: 0 0 8px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+}
+
+.edu-timeline__node svg {
+  width: 18px;
+  height: 18px;
+  filter: drop-shadow(0 0 8px currentColor);
+  transition: filter var(--dur-med) var(--ease);
+}
+.edu-timeline__node:hover svg, .edu-timeline__node.is-active svg {
+  filter: drop-shadow(0 0 16px currentColor);
+}
+
+/* --- Cards: condensed vertical rhythm --- */
+.edu-card {
+  position: relative;
+  padding: 0.75rem 1.2rem;
+  border-radius: var(--radius-lg);
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.edu-card.is-inview { opacity: 1; transform: translateY(0); }
+.edu-card.is-inview:hover { transform: translateY(-4px); }
+
+.edu-card--college { background: linear-gradient(160deg, rgba(121, 239, 117, 0.09), rgba(121, 239, 117, 0.02) 60%), var(--bg-panel); border-color: var(--border-lime); box-shadow: var(--shadow-card), 0 0 30px -18px rgba(121, 239, 117, 0.4); }
+.edu-card--college.is-inview:hover { box-shadow: var(--shadow-card), 0 0 40px -12px rgba(121, 239, 117, 0.45); }
+
+.edu-card--school { background: linear-gradient(160deg, rgba(111, 168, 255, 0.09), rgba(111, 168, 255, 0.02) 60%), var(--bg-panel); border-color: rgba(111, 168, 255, 0.35); box-shadow: var(--shadow-card), 0 0 30px -18px rgba(111, 168, 255, 0.4); }
+.edu-card--school.is-inview:hover { box-shadow: var(--shadow-card), 0 0 40px -12px rgba(111, 168, 255, 0.45); }
+
+.edu-card__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.3rem;
+}
+.edu-card__eyebrow::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+.edu-card--college .edu-card__eyebrow { color: var(--lime); }
+.edu-card--school .edu-card__eyebrow { color: var(--blue); }
+
+.edu-card__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.12rem;
+  color: var(--text-primary);
+  margin: 0 0 0.4rem;
+}
+
+.edu-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem 1rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+.edu-card__meta span { display: inline-flex; align-items: center; gap: 0.4rem; }
+.edu-card__meta svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+
+.edu-card__divider {
+  height: 1px;
+  background: var(--border-subtle);
+  margin-bottom: 0.5rem;
+}
+
+.edu-card__degree { font-size: 0.88rem; color: var(--text-secondary); margin: 0 0 0.2rem; }
+
+.edu-card__score {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.92rem;
+  margin: 0;
+}
+.edu-card--college .edu-card__score { color: var(--lime); }
+
+.edu-card__grades { display: flex; flex-direction: column; gap: 0.22rem; }
+.edu-card__grades span { font-size: 0.86rem; color: var(--text-secondary); }
+.edu-card__grades strong { font-family: var(--font-display); color: var(--blue); font-weight: 700; }
+
+/* --- Right side: composed visual scene --- */
+.edu-visual {
+  position: relative;
+  height: clamp(380px, 46vw, 620px);
+  overflow: hidden;
+}
+
+/* Right side, built entirely from CSS/SVG: the graduation image,
+   large, floating inside a set of thin incomplete orbit rings, with
+   a few small stars continuously revolving around it along those
+   same circular paths. */
+/* Scene: graduation image centered exactly inside the orbit rings */
+.edu-scene {
+  position: absolute;
+  top: 50%;
+  left: 58%;
+  transform: translate(-50%, -50%);
+  width: min(80%, 560px);
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.edu-orbit {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  z-index: 0;
+}
+.edu-orbit circle {
+  fill: none;
+  stroke-linecap: round;
+}
+.edu-orbit--1 circle { stroke: rgba(111, 227, 240, 0.22); stroke-width: 0.35; }
+.edu-orbit--2 {
+  width: 74%;
+  height: 74%;
+  top: 13%;
+  left: 13%;
+  transform: rotate(35deg);
+}
+.edu-orbit--2 circle { stroke: rgba(121, 239, 117, 0.18); stroke-width: 0.32; }
+.edu-orbit--3 {
+  width: 108%;
+  height: 108%;
+  top: -4%;
+  left: -4%;
+}
+.edu-orbit--3 circle { stroke: rgba(160, 150, 255, 0.12); stroke-width: 0.28; }
+
+/* Stars revolving around the illustration: each wrapper is a full
+   circle the same size as its matching orbit ring, rotating
+   continuously; the star sits pinned to the top edge of that circle
+   so it visibly travels along the ring as the wrapper spins. */
+.edu-orbit-spin {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  pointer-events: none;
+  animation: eduOrbitSpin 16s linear infinite;
+}
+.edu-orbit-spin--1 { animation-duration: 22s; }
+.edu-orbit-spin--2 { width: 74%; height: 74%; top: 13%; left: 13%; animation-duration: 16s; animation-direction: reverse; }
+.edu-orbit-spin--3 { width: 108%; height: 108%; top: -4%; left: -4%; animation-duration: 30s; }
+
+.edu-orbit-star {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 10px 3px rgba(111, 227, 240, 0.65);
+  animation: eduStarBlink 2.4s ease-in-out infinite;
+}
+.edu-orbit-star::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 100%;
+  width: 46px;
+  height: 2px;
+  transform: translateY(-50%);
+  background: linear-gradient(to left, rgba(111, 227, 240, 0.75), transparent);
+  border-radius: 2px;
+}
+.edu-orbit-star--lime { background: var(--lime); box-shadow: 0 0 10px 3px rgba(121, 239, 117, 0.6); }
+.edu-orbit-star--lime::before { background: linear-gradient(to left, rgba(121, 239, 117, 0.7), transparent); }
+.edu-orbit-star--sm { width: 4px; height: 4px; background: var(--text-primary); box-shadow: 0 0 8px 2px rgba(244, 246, 248, 0.5); }
+.edu-orbit-star--sm::before { height: 1.5px; width: 34px; background: linear-gradient(to left, rgba(244, 246, 248, 0.6), transparent); }
+
+/* Orbit 2 spins in reverse, so its star's tail needs to trail on the
+   opposite side to stay visually behind the direction of travel. */
+.edu-orbit-spin--2 .edu-orbit-star::before {
+  right: auto;
+  left: 100%;
+  background: linear-gradient(to right, rgba(121, 239, 117, 0.7), transparent);
+}
+
+@keyframes eduStarBlink {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+
+@keyframes eduOrbitSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.edu-illustration {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+  width: min(66%, 400px);
+  height: auto;
+  animation: eduFloat 7s ease-in-out infinite;
+  filter: drop-shadow(0 0 24px rgba(0, 255, 220, 0.22)) drop-shadow(0 0 55px rgba(0, 150, 255, 0.13)) drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+  transition: scale var(--dur-med) var(--ease), filter var(--dur-med) var(--ease);
+}
+.edu-illustration:hover {
+  scale: 1.05;
+  filter: drop-shadow(0 0 35px rgba(0, 255, 220, 0.35)) drop-shadow(0 0 75px rgba(0, 150, 255, 0.25)) drop-shadow(0 20px 35px rgba(0, 0, 0, 0.5));
+}
+
+@keyframes eduFloat {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, calc(-50% - 14px)); }
+}
+
+@media (max-width: 940px) {
+  .edu-layout { grid-template-columns: 1fr; }
+  .edu-visual { display: none; }
+}
+
+
+@media (max-width: 720px) {
+  /* Keep timeline visible on mobile but tighten the gaps, while increasing margin between entries */
+  .edu-timeline { column-gap: var(--sp-2); row-gap: var(--sp-4); }
+  .edu-card { padding: 0.85rem 1rem; }
+  .edu-timeline__node::after { width: calc(var(--sp-2) + 1px); }
+}

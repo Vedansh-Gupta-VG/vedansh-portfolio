@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- Content-Security-Policy: restricts what this page is allowed to load/run,
+     so an injected/compromised script can't quietly pull in code or send data
+     to a domain that isn't explicitly allowed below. Each allowed domain here
+     corresponds to something the site actually uses:
+       - fonts.googleapis.com / fonts.gstatic.com: Google Fonts
+       - cdn.jsdelivr.net: EmailJS SDK
+       - api.emailjs.com: EmailJS's send endpoint (the contact form's network call)
+     If you add a new external script/font/API later, it must be added here
+     too or the browser will silently block it. -->
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https://cdn.jsdelivr.net https://cdn.simpleicons.org; connect-src 'self' https://api.emailjs.com; base-uri 'self'; form-action 'self'">
+<title>Vedansh Gupta | Software Developer</title>
+<meta name="description" content="Portfolio of Vedansh Gupta, final-year B.Tech IT student at VIT Vellore, building intelligent software across AI, cybersecurity, and cloud.">
+<link rel="icon" type="image/png" href="assets/images/logo_2.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/variables.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/atmosphere.css">
+<link rel="stylesheet" href="css/nav.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/modal.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/skills.css">
+<link rel="stylesheet" href="css/experience.css">
+<link rel="stylesheet" href="css/projects.css">
+<link rel="stylesheet" href="css/achievements.css">
+<link rel="stylesheet" href="css/education.css">
+<link rel="stylesheet" href="css/doc-viewer.css">
+<link rel="stylesheet" href="css/terminal.css">
+<link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/end.css">
+</head>
+<body>
+
+<!-- ==================== ATMOSPHERE (fixed backdrop) =================== -->
+<div class="atmosphere" aria-hidden="true">
+  <div class="atmosphere__nebula"></div>
+  <canvas id="starfieldCanvas"></canvas>
+  <div class="atmosphere__vignette"></div>
+  <div class="atmosphere__grid"></div>
+</div>
+
+<!-- ============================= NAV BAR ============================= -->
+<header class="site-header" id="siteHeader">
+  <a href="#hero" class="logo-home" aria-label="Home">
+    <img src="assets/images/logo.jpg" alt="VG logo">
+  </a>
+
+  <div class="nav-pill">
+    <nav class="nav-links">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#achievements">Achievements</a>
+      <a href="#education">Education</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="nav-dots"><span></span><span></span><span></span></div>
+  </div>
+
+  <button class="hamburger" id="navToggle" aria-label="Open menu" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- ======================= MOBILE FULL-SCREEN MENU ==================== -->
+<div class="mobile-menu" id="mobileMenu">
+  <div class="mobile-menu-panel">
+    <div class="mmp-header">
+      <span class="mmp-eyebrow">// Navigate</span>
+      <button class="mmp-close" id="mobileMenuClose" aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="mmp-divider"><span></span></div>
+
+    <ul class="mmp-list">
+      <li><a href="#about"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="3.4"/><path d="M5 20c1.5-4 4.2-6 7-6s5.5 2 7 6"/></svg></span><span class="mmp-num">01</span><span class="mmp-text"><span class="mmp-title">About</span><span class="mmp-sub">Who I am</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#skills"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M8 6 3 12l5 6M16 6l5 6-5 6"/></svg></span><span class="mmp-num">02</span><span class="mmp-text"><span class="mmp-title">Skills</span><span class="mmp-sub">What I know</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#experience"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span><span class="mmp-num">03</span><span class="mmp-text"><span class="mmp-title">Experience</span><span class="mmp-sub">My journey</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#projects"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 2c3 2 4 5 4 8 0 4-2 7-4 11-2-4-4-7-4-11 0-3 1-6 4-8Z"/><circle cx="12" cy="9" r="1.6"/></svg></span><span class="mmp-num">04</span><span class="mmp-text"><span class="mmp-title">Projects</span><span class="mmp-sub">Things I've built</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#achievements"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M9 15h6v3H9zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg></span><span class="mmp-num">05</span><span class="mmp-text"><span class="mmp-title">Achievements</span><span class="mmp-sub">Milestones</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#education"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 9 12 4l10 5-10 5-10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></span><span class="mmp-num">06</span><span class="mmp-text"><span class="mmp-title">Education</span><span class="mmp-sub">My learning path</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+      <li><a href="#contact"><span class="mmp-hex"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m4 6 8 7 8-7"/></svg></span><span class="mmp-num">07</span><span class="mmp-text"><span class="mmp-title">Contact</span><span class="mmp-sub">Let's connect</span></span><svg class="mmp-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></a></li>
+    </ul>
+
+    <div class="mmp-footer">
+      <span class="mmp-status"><span class="mmp-dot"></span>// System Online</span>
+      <span class="mmp-activity"><i></i><i></i><i></i><i></i><i></i></span>
+    </div>
+  </div>
+</div>
+
+<!-- <main> landmark: wraps every real page section (hero through footer) so
+     screen readers and other assistive tech can jump straight to the page's
+     primary content, skipping the nav. Modal overlays stay outside it since
+     they aren't part of the normal document flow. -->
+<main>
+
+<!-- ============================ HERO SECTION ========================== -->
+<section class="hero" id="hero">
+  <div class="hero__layout section-inner">
+    <div class="social-rail">
+      <span class="social-rail__dot"></span>
+      <div class="social-rail__icons">
+        <a class="rail-icon" href="https://github.com/Vedansh-Gupta-VG" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.98 3.23 9.2 7.72 10.69.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.14.68-3.8-1.34-3.8-1.34-.51-1.3-1.25-1.64-1.25-1.64-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.62 1.22 3.26.93.1-.73.39-1.22.71-1.5-2.51-.29-5.15-1.25-5.15-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.45.11-3.02 0 0 .95-.3 3.11 1.16a10.8 10.8 0 0 1 5.66 0c2.16-1.46 3.11-1.16 3.11-1.16.61 1.57.23 2.73.11 3.02.72.79 1.16 1.8 1.16 3.03 0 4.33-2.65 5.28-5.17 5.56.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.02 11.02 0 0 0 23.02 11.5C23.02 5.24 18.27.5 12 .5Z"/></svg>
+        </a>
+        <a class="rail-icon" href="https://www.linkedin.com/in/vedansh-gupta-ba298528a" target="_blank" rel="noopener" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.58c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.68H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg>
+        </a>
+        <a class="rail-icon" href="mailto:vedanshgupta.off@gmail.com" aria-label="Email">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg>
+        </a>
+        <a class="rail-icon" href="https://leetcode.com/u/Vedansh_Gupta/" target="_blank" rel="noopener noreferrer" aria-label="LeetCode profile">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.483 0a1.374 1.374 0 0 0-.961.438L7.116 6.226l-3.854 4.126a5.266 5.266 0 0 0-1.209 2.104 5.35 5.35 0 0 0-.125.513 5.527 5.527 0 0 0 .062 2.362 5.83 5.83 0 0 0 .349 1.017 5.938 5.938 0 0 0 1.271 1.818l4.277 4.193.039.038c2.248 2.165 5.852 2.133 8.063-.074l2.396-2.392c.54-.54.54-1.414.003-1.955a1.378 1.378 0 0 0-1.951-.003l-2.396 2.392a3.021 3.021 0 0 1-4.205.038l-.02-.019-4.276-4.193c-.652-.64-.972-1.469-.948-2.263a2.68 2.68 0 0 1 .066-.523 2.545 2.545 0 0 1 .619-1.164L9.13 8.114c1.058-1.134 3.204-1.27 4.43-.278l3.501 2.831c.593.48 1.461.387 1.94-.207a1.384 1.384 0 0 0-.207-1.943l-3.5-2.831c-.8-.647-1.766-1.045-2.774-1.202l2.015-2.158A1.384 1.384 0 0 0 13.483 0zm-2.866 12.815a1.38 1.38 0 0 0-1.38 1.382 1.38 1.38 0 0 0 1.38 1.382H20.79a1.38 1.38 0 0 0 1.38-1.382 1.38 1.38 0 0 0-1.38-1.382z"/></svg>
+        </a>
+      </div>
+      <span class="social-rail__dot"></span>
+    </div>
+
+    <div class="hero__inner">
+      <p class="hero__greeting">// Hi, I'm</p>
+      <h1 class="hero__name">VEDANSH GUPTA</h1>
+      <p class="hero__typewriter"><span id="typewriterText"></span><span class="cursor">&nbsp;</span></p>
+      <p class="hero__headline">Building Intelligent Software That Solves Real Problems.</p>
+      <div class="hero__ctas">
+        <a href="#projects" class="btn btn-primary">
+          Explore My Work
+          <svg class="btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="https://drive.google.com/file/d/13iw_mfHcqMjfqELzbxsFTAMphkqEx-0Y/view?usp=sharing" target="_blank" rel="noopener" class="btn btn-outline btn-download">
+          <span class="btn-download__shine" aria-hidden="true"></span>
+          <svg class="btn-download__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          <span>Download Resume</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="hero__astro" aria-hidden="true">
+      <picture>
+        <source srcset="assets/images/astronaut.webp" type="image/webp">
+        <img src="assets/images/astronaut.png" alt="">
+      </picture>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== ABOUT ============================== -->
+<section id="about">
+  <div class="section-inner about__grid">
+
+    <div class="about__intro">
+      <p class="eyebrow">// About Me</p>
+      <h2 class="section-heading">Turning ambitious ideas into<br><span class="accent">powerful software.</span></h2>
+      <p>I build <strong>scalable applications</strong>, <strong>intelligent systems</strong>, and <strong>efficient digital experiences</strong>, exploring <strong>new technologies</strong> to solve <strong>complex challenges</strong> and make software <strong>simpler</strong> and <strong>smarter</strong>.</p>
+      <button class="about__cta" data-modal-open="modalAboutMe">&gt; more_about_me.exe</button>
+    </div>
+
+    <div class="code-editor glass-card glass-card--lime">
+      <div class="code-editor__titlebar">
+        <div class="code-editor__dots"><span></span><span></span><span></span></div>
+        <span class="code-editor__icon">&lt;/&gt;</span>
+      </div>
+      <div class="code-editor__body">
+<pre style="margin:0;white-space:pre-wrap;"><span class="kw">const</span> developer = {
+  <span class="prop">name</span>: <span class="str">"Vedansh Gupta"</span>,
+  <span class="prop">role</span>: <span class="str">"Software Engineer"</span>,
+  <span class="prop">domains</span>: [<span class="str">"AI"</span>, <span class="str">"Security"</span>, <span class="str">"Cloud"</span>],
+  <span class="prop">interests</span>: [<span class="str">"Data Science"</span>, <span class="str">"System Design"</span>],
+  <span class="prop">goal</span>: <span class="str">"Build software that solves real-world problems"</span>,
+};
+
+<span class="kw">while</span> (curious) {
+  learn();
+  build();
+  improve();
+}</pre>
+      </div>
+      <div class="mission-status">
+        <div class="mission-status__header">&gt; mission.status</div>
+        <div class="mission-status__output">Building. Learning. Growing. Repeating.<span class="blink-cursor">&nbsp;</span></div>
+      </div>
+    </div>
+
+    <div class="achv-stack">
+      <div class="achv-card glass-card">
+        <span class="achv-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c3 2 4 5 4 8 0 4-2 7-4 11-2-4-4-7-4-11 0-3 1-6 4-8Z"/><circle cx="12" cy="9" r="1.6"/></svg></span>
+        <div><div class="achv-card__number">10+</div><div class="achv-card__label">Projects Built</div></div>
+      </div>
+      <div class="achv-card glass-card">
+        <span class="achv-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg></span>
+        <div><div class="achv-card__number">300+</div><div class="achv-card__label">Problems Solved</div></div>
+      </div>
+      <div class="achv-card glass-card">
+        <span class="achv-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 12 4l10 5-10 5-10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg></span>
+        <div><div class="achv-card__number">9.15</div><div class="achv-card__label">CGPA</div></div>
+      </div>
+      <div class="achv-card glass-card">
+        <span class="achv-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4h10v4a5 5 0 0 1-10 0V4Z"/><path d="M9 15h6v3H9zM7 4H4v2a3 3 0 0 0 3 3M17 4h3v2a3 3 0 0 1-3 3"/></svg></span>
+        <div><div class="achv-card__number">5+</div><div class="achv-card__label">Patents</div></div>
+      </div>
+      <div class="achv-card glass-card">
+        <span class="achv-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 12h5M9.5 15.5h5"/></svg></span>
+        <div><div class="achv-card__number">1</div><div class="achv-card__label">Research Paper</div></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- About Me modal: rendered as a terminal window -->
+<div class="modal-overlay" id="modalAboutMe">
+  <div class="terminal-modal" id="terminalModal" role="dialog" aria-label="More about me">
+    <div class="terminal-modal__header">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename">profile.exe</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+
+      <div class="terminal-modal__boot" id="terminalBoot" aria-hidden="true">
+        <p>C:\Users\Vedansh&gt; run profile.exe</p>
+        <p>Initializing...</p>
+        <p>Loading profile...</p>
+        <p>Done.</p>
+        <p>Select a section from the left.</p>
+      </div>
+
+      <div class="terminal-modal__main" id="terminalMain">
+        <nav class="terminal-modal__nav" aria-label="Profile sections">
+          <p class="terminal-modal__nav-label">PROFILE</p>
+          <ul>
+            <li><button type="button" class="term-nav-item is-active" data-term-section="whoami"><span class="term-nav-item__arrow">&gt;</span>Who Am I</button></li>
+            <li><button type="button" class="term-nav-item" data-term-section="journey"><span class="term-nav-item__arrow">&gt;</span>Journey</button></li>
+            <li><button type="button" class="term-nav-item" data-term-section="mindset"><span class="term-nav-item__arrow">&gt;</span>Mindset</button></li>
+            <li><button type="button" class="term-nav-item" data-term-section="interests"><span class="term-nav-item__arrow">&gt;</span>Interests</button></li>
+            <li><button type="button" class="term-nav-item" data-term-section="goals"><span class="term-nav-item__arrow">&gt;</span>Goals</button></li>
+          </ul>
+        </nav>
+
+        <div class="terminal-modal__content">
+          <div class="term-panel is-active" data-term-panel="whoami">
+            <p class="term-prompt">&gt; whoami</p>
+            <p class="term-name">Vedansh Gupta</p>
+            <p>Final-year Information Technology student at VIT Vellore.</p>
+            <p>I enjoy building software that combines Artificial Intelligence, Software Engineering, Cloud Computing and Cybersecurity.</p>
+            <p>My focus isn't just writing code.</p>
+            <p>I enjoy understanding systems, breaking complex problems into manageable pieces and designing practical solutions.</p>
+          </div>
+
+          <div class="term-panel" data-term-panel="journey">
+            <p class="term-prompt">&gt; journey</p>
+            <ul class="term-lines">
+              <li>Everything started with curiosity.</li>
+              <li>Over the past few years I explored different areas of software development.</li>
+              <li>Built AI applications.</li>
+              <li>Designed full-stack systems.</li>
+              <li>Worked on enterprise analytics during my internship.</li>
+              <li>Participated in hackathons.</li>
+              <li>Published research.</li>
+              <li>Filed patents.</li>
+              <li>Solved 300+ coding problems.</li>
+              <li>Every project taught me something new.</li>
+            </ul>
+          </div>
+
+          <div class="term-panel" data-term-panel="mindset">
+            <p class="term-prompt">&gt; mindset</p>
+            <p>I enjoy solving problems before writing code.</p>
+            <p>For every project I ask:</p>
+            <ul class="term-lines">
+              <li>What problem am I solving?</li>
+              <li>Can this be simpler?</li>
+              <li>Will this scale?</li>
+              <li>Can someone else understand this six months later?</li>
+            </ul>
+            <p>Clean architecture and maintainability matter just as much as functionality.</p>
+          </div>
+
+          <div class="term-panel" data-term-panel="interests">
+            <p class="term-prompt">&gt; interests</p>
+            <ul class="term-tags">
+              <li>Software Engineering</li>
+              <li>Artificial Intelligence</li>
+              <li>Backend Development</li>
+              <li>System Design</li>
+              <li>Cybersecurity</li>
+              <li>Cloud Computing</li>
+              <li>Distributed Systems</li>
+              <li>Developer Tools</li>
+            </ul>
+          </div>
+
+          <div class="term-panel" data-term-panel="goals">
+            <p class="term-prompt">&gt; goals</p>
+            <ul class="term-lines">
+              <li>Build products that solve meaningful problems.</li>
+              <li>Work with experienced engineers.</li>
+              <li>Continue learning every day.</li>
+              <li>Contribute to large-scale software systems.</li>
+              <li>Keep improving both technically and professionally.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="terminal-modal__cmdline">
+        <span class="term-cmd-prompt">C:\Users\Vedansh&gt;</span>
+        <span class="term-cmd-cursor" aria-hidden="true">&nbsp;</span>
+        <div class="term-cmd-actions">
+          <button type="button" class="term-cmd-btn" data-term-action="contact">contact</button>
+          <button type="button" class="term-cmd-btn" data-modal-close>exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- ============================== SKILLS ============================== -->
+<section id="skills">
+  <div class="section-inner">
+    <p class="eyebrow">// My Skills</p>
+    <h2 class="section-heading"><span style="color:var(--text-primary)">Tools I</span> <span class="accent">Use.</span> <span style="color:var(--text-primary)">Ideas I</span> <span class="accent">Build</span> <span style="color:var(--text-primary)">With.</span></h2>
+    <p class="section-desc">The technologies I use to transform ideas into practical software solutions.</p>
+
+    <div class="skills__grid">
+      <div class="skill-card skill-card--languages glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-5 6 5 6"/><path d="m16 6 5 6-5 6"/></svg></span>Languages</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="" loading="lazy">Java</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="" loading="lazy">Python</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/cplusplus/cplusplus-original.svg" alt="" loading="lazy">C++</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="" loading="lazy">JavaScript</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--frontend glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18"/><path d="M8 4v5"/></svg></span>Frontend</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="" loading="lazy">HTML</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="" loading="lazy">CSS</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="" loading="lazy">React</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/nextdotjs/FFFFFF" alt="" loading="lazy">Next.js</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tailwindcss/tailwindcss-original.svg" alt="" loading="lazy">Tailwind CSS</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/bootstrap/bootstrap-original.svg" alt="" loading="lazy">Bootstrap</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--backend glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01"/></svg></span>Backend</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="" loading="lazy">Node.js</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/express/FFFFFF" alt="" loading="lazy">Express</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/flask/FFFFFF" alt="" loading="lazy">Flask</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--database glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="6" rx="8" ry="3"/><path d="M4 6v6c0 1.66 3.58 3 8 3s8-1.34 8-3V6"/><path d="M4 12v6c0 1.66 3.58 3 8 3s8-1.34 8-3v-6"/></svg></span>Database</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mongodb/mongodb-original.svg" alt="" loading="lazy">MongoDB</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/oracle/oracle-original.svg" alt="" loading="lazy">Oracle</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/mysql/mysql-original.svg" alt="" loading="lazy">MySQL</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="" loading="lazy">PostgreSQL</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--ml glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5a3 3 0 1 0-5.997.125 4 4 0 0 0-2.526 5.77 4 4 0 0 0 .556 6.588A4 4 0 1 0 12 18Z"/><path d="M12 5a3 3 0 1 1 5.997.125 4 4 0 0 1 2.526 5.77 4 4 0 0 1-.556 6.588A4 4 0 1 1 12 18Z"/><path d="M15 13a4.5 4.5 0 0 1-3-4 4.5 4.5 0 0 1-3 4"/><path d="M17.599 6.5a3 3 0 0 0 .399-1.375"/><path d="M6.002 5.125A3 3 0 0 0 6.401 6.5"/><path d="M3.477 10.896a4 4 0 0 1 .585-.396"/><path d="M19.938 10.5a4 4 0 0 1 .585.396"/><path d="M6 18a4 4 0 0 1-1.967-.516"/><path d="M19.967 17.484A4 4 0 0 1 18 18"/></svg></span>Data Science / ML</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/scikitlearn/scikitlearn-original.svg" alt="" loading="lazy">Scikit-learn</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/tensorflow/tensorflow-original.svg" alt="" loading="lazy">TensorFlow</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/pandas/pandas-original.svg" alt="" loading="lazy">Pandas</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/numpy/numpy-original.svg" alt="" loading="lazy">NumPy</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/opencv/opencv-original.svg" alt="" loading="lazy">OpenCV</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--analytics glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M12 20V4M20 20v-7"/></svg></span>Data &amp; Analytics</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.simpleicons.org/knime/F8C00D" alt="" loading="lazy">KNIME</span><span class="skill-badge"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M12.001 2.502 2.404 8l9.597 5.498L21.596 8l-9.595-5.498zM2.404 11.832v4.164L12.001 21.5l9.595-5.504v-4.164l-9.595 5.504-9.597-5.504z"/></svg>OpenRefine</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/matlab/matlab-original.svg" alt="" loading="lazy">MATLAB</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/r/r-original.svg" alt="" loading="lazy">R</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--cloud glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 18a4.5 4.5 0 0 1-.4-8.98A5.5 5.5 0 0 1 17.3 9.1 4 4 0 0 1 17 18H7Z"/></svg></span>Cloud &amp; DevOps</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" alt="" loading="lazy">AWS</span><span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="" loading="lazy">Git</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/github/FFFFFF" alt="" loading="lazy">GitHub</span><span class="skill-badge"><svg viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 22.525H0l12-21.05 12 21.05z"/></svg>Vercel</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--hardware glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="8" height="8" rx="1"/><path d="M8 3v3M16 3v3M8 18v3M16 18v3M3 8h3M3 16h3M18 8h3M18 16h3"/></svg></span>Hardware &amp; Electronics</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/arduino/arduino-original.svg" alt="" loading="lazy">Arduino uno</span><span class="skill-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" ry="2"/><path d="M9 9h6v6H9z"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M20 9h3M20 14h3M1 9h3M1 14h3"/></svg>Multisim</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--tools glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a4 4 0 0 0-5.6 5.1L4 16.5V20h3.5l5.1-5.1a4 4 0 0 0 5.1-5.6l-2.6 2.6-2-2Z"/></svg></span>Tools &amp; IDE</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Star UML</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/selenium" alt="" loading="lazy">Selenium</span>
+        </div>
+      </div>
+
+      <div class="skill-card skill-card--networking glass-card">
+        <div class="skill-card__header"><span class="skill-card__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"/><path d="M8.5 15.5a5 5 0 0 1 0-7M15.5 8.5a5 5 0 0 1 0 7M5.5 18.5a9 9 0 0 1 0-13M18.5 5.5a9 9 0 0 1 0 13"/></svg></span>Networking</div>
+        <div class="skill-card__badges">
+          <span class="skill-badge"><img src="https://cdn.simpleicons.org/wireshark" alt="" loading="lazy">Wireshark</span><span class="skill-badge"><img src="https://cdn.simpleicons.org/cisco" alt="" loading="lazy">Cisco Packet Tracer</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="skills__banner glass-card glass-card--lime">
+      <span class="skills__banner-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg></span>
+      <p>Always exploring new technologies and building <strong>scalable</strong>, <strong>impactful solutions</strong>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================== EXPERIENCE ============================== -->
+<section id="experience">
+  <div class="section-inner">
+    <p class="eyebrow">// Experience</p>
+    <h2 class="section-heading"><span style="color:var(--text-primary)">My</span> <span class="accent">Experience</span></h2>
+    <p class="section-desc">A blend of professional experience and leadership roles that have shaped my skills, mindset, and approach to solving real-world problems.</p>
+
+    <div class="exp-timeline">
+      <div class="exp-timeline__track" aria-hidden="true">
+        <span class="exp-timeline__fill" id="expTimelineFill"></span>
+      </div>
+
+      <div class="exp-timeline__node exp-timeline__node--work" id="expNode1" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 12h18"/></svg>
+      </div>
+
+      <article class="exp-card exp-card--work glass-card" data-exp-target="expNode1">
+        <div class="exp-card__head">
+          <div class="exp-card__intro">
+            <p class="exp-card__eyebrow exp-card__eyebrow--lime">Work Experience</p>
+            <h3 class="exp-card__company">Exascale Deeptech &amp; AI Pvt. Ltd.</h3>
+            <p class="exp-card__role-title">Data Science Developer Intern</p>
+          </div>
+
+          <button type="button" class="exp-card__doc-btn exp-card__doc-btn--lime" data-cert-open
+            data-cert-image="content-to-add/certificates/exascale-ai-internship-lor.png"
+            data-cert-title="Internship Completion Letter"
+            data-cert-meta='[{"label":"Organization","value":"Exascale Deeptech &amp; AI Pvt. Ltd."},{"label":"Duration","value":"May 2025 &ndash; Jun 2025"},{"label":"Document Type","value":"Letter of Recommendation"}]'>
+            <svg class="exp-card__doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg>
+            <span class="exp-card__doc-text">
+              <span class="exp-card__doc-label">Verified Document</span>
+              <span class="exp-card__doc-cta">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="exp-card__meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Raipur, Chhattisgarh</span>
+          <span class="exp-card__meta-sep" aria-hidden="true">&bull;</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>May 2025 &ndash; Jun 2025</span>
+        </div>
+
+        <ul class="exp-card__points">
+          <li>Processed and analyzed enterprise datasets of 3M+ records using <span class="exp-highlight exp-highlight--lime">KNIME</span> and OpenRefine, building automated workflows for data transformation and quality validation.</li>
+          <li>Conducted business intelligence analysis and domain analysis by extracting KPIs and analytical formulas from technical literature for executive decision-support systems.</li>
+          <li>Explored PostgreSQL integration with <span class="exp-highlight exp-highlight--lime">KNIME</span>, mapped analytical formulas to enterprise datasets, and supported data seeding and reporting activities.</li>
+          <li>Designed and built a <span class="exp-highlight exp-highlight--lime">Streamlit</span>-based executive dashboard prototype, presenting the final solution to senior leadership.</li>
+        </ul>
+
+        <div class="exp-card__chips">
+          <span class="exp-chip exp-chip--lime">KNIME</span>
+          <span class="exp-chip exp-chip--lime">OpenRefine</span>
+          <span class="exp-chip exp-chip--lime">Streamlit</span>
+          <span class="exp-chip exp-chip--lime">Data Analytics</span>
+          <span class="exp-chip exp-chip--lime">Business Analytics</span>
+        </div>
+      </article>
+
+      <div class="exp-timeline__node exp-timeline__node--lead" id="expNode2" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+
+      <article class="exp-card exp-card--lead glass-card" data-exp-target="expNode2">
+        <div class="exp-card__head">
+          <div class="exp-card__intro">
+            <p class="exp-card__eyebrow exp-card__eyebrow--blue">Leadership Experience</p>
+            <h3 class="exp-card__company">German Literary Association (DLA)</h3>
+            <p class="exp-card__role-title">Management Head</p>
+          </div>
+
+          <button type="button" class="exp-card__doc-btn exp-card__doc-btn--blue" data-cert-open
+            data-cert-image="content-to-add/certificates/dla-management-head-certificate.png"
+            data-cert-title="Certificate of Appreciation"
+            data-cert-meta='[{"label":"Organization","value":"German Literary Association (DLA)"},{"label":"Role","value":"Management Head"},{"label":"Year","value":"2025"}]'>
+            <svg class="exp-card__doc-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/></svg>
+            <span class="exp-card__doc-text">
+              <span class="exp-card__doc-label">Verified Document</span>
+              <span class="exp-card__doc-cta">View <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></span>
+            </span>
+          </button>
+        </div>
+
+        <div class="exp-card__meta">
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>Vellore, Tamil Nadu</span>
+          <span class="exp-card__meta-sep" aria-hidden="true">&bull;</span>
+          <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>2024 &ndash; 2025</span>
+        </div>
+
+        <ul class="exp-card__points">
+          <li>Managed team operations, delegated responsibilities, and ensured smooth execution of club activities.</li>
+          <li>Organized panel discussions, book readings, and cultural exchanges focused on German literature.</li>
+          <li>Maintained communication between members, faculty, and external stakeholders.</li>
+        </ul>
+
+        <div class="exp-card__chips">
+          <span class="exp-chip exp-chip--blue">Team Leadership</span>
+          <span class="exp-chip exp-chip--blue">Event Coordination</span>
+          <span class="exp-chip exp-chip--blue">Communication</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-inner">
+    <p class="eyebrow">// Projects</p>
+    <h2 class="section-heading"><span style="color:var(--text-primary)">Things I've</span> <span class="accent">Built</span></h2>
+    <p class="section-desc">A showcase of projects that reflect my passion for problem-solving, innovation, and building impactful solutions.</p>
+
+    <div class="projects__grid" id="projectsGrid"></div>
+
+    <div class="projects__view-all" data-modal-open="modalExplorer" tabindex="0" role="button" aria-label="View all projects">
+      <div class="projects__view-all-left">
+        <span class="projects__view-all-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></span>
+        <span>
+          <span class="projects__view-all-title">View All Projects</span>
+          <span class="projects__view-all-sub">Explore my complete collection of work.</span>
+        </span>
+      </div>
+      <span class="projects__view-all-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </div>
+  </div>
+</section>
+
+<!-- Project Explorer: the "view all" popup, listing the remaining
+     projects. Clicking a row opens the project-detail modal on top
+     of this one — closing it returns here, closing this returns to
+     the main screen. -->
+<div class="modal-overlay" id="modalExplorer">
+  <div class="explorer">
+    <div class="terminal-modal__header">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename">explorer.exe</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close project">&times;</button>
+    </div>
+    <div class="explorer__body" id="explorerList">
+      <div class="explorer__intro">
+        <h3 class="explorer__title">Project Explorer</h3>
+        <p class="explorer__subtitle">A collection of AI, Machine Learning, Cybersecurity, Cloud, Distributed Computing, and Full Stack projects built during my journey.</p>
+      </div></div>
+    <div class="explorer__footer">
+      <button class="btn btn-outline" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Project detail modal: single shared instance, refilled from
+     js/projects.js on every open. Can be reached from a featured
+     card or from a Project Explorer row, so it always renders above
+     whatever is behind it. -->
+<div class="modal-overlay" id="modalProject">
+  <div class="pmodal">
+    <div class="terminal-modal__header" style="border-bottom-color: var(--card-accent);">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename" style="color: var(--card-accent);">project.exe</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close project">&times;</button>
+    </div>
+    <div class="pmodal__progress-track"><div class="pmodal__progress-fill" id="pmProgressFill"></div></div>
+
+    <div class="pmodal__scroll">
+      <div class="pmodal__media" id="pmMedia"></div>
+
+      <div class="pmodal__head">
+        <h3 class="pmodal__title" id="pmTitle"></h3>
+        <p class="pmodal__subtitle" id="pmSubtitle"></p>
+        <p class="pmodal__desc" id="pmDesc"></p>
+      </div>      <div class="pmodal__section">
+        <h4>Problem</h4>
+        <p id="pmProblem"></p>
+      </div>
+      <div class="pmodal__section">
+        <h4>Solution</h4>
+        <p id="pmSolution"></p>
+      </div>
+      <div class="pmodal__section">
+        <h4>Key Features</h4>
+        <ul class="pmodal__list" id="pmFeatures"></ul>
+      </div>
+      <div class="pmodal__section">
+        <h4>Technology Stack</h4>
+        <div class="pmodal__chips" id="pmStack"></div>
+      </div>
+      <div class="pmodal__section">
+        <h4>Challenges</h4>
+        <p id="pmChallenges"></p>
+      </div>
+      <div class="pmodal__section">
+        <h4>What I Learned</h4>
+        <ul class="pmodal__list" id="pmLearned"></ul>
+      </div>
+
+      <div class="pmodal__footer">
+        <div id="pmActions" class="pmodal__footer-actions"></div>
+        <button class="btn btn-outline" data-modal-close>Close Project</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================== ACHIEVEMENTS ========================================================== -->
+<section id="achievements">
+  <div class="section-inner">
+    <p class="eyebrow">// Achievements</p>
+    <h2 class="section-heading achv-heading">Milestones<br>That <span class="accent">Matter.</span></h2>
+    <p class="section-desc">Research, innovation, and continuous learning that drive impact.</p>
+
+    <div class="achv-grid">
+
+      <!-- Publications & Patents -->
+      <div class="achv-panel glass-card glass-card--lime">
+        <div class="achv-panel__header">
+          <span class="achv-panel__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5C4 4.7 4.7 4 5.5 4H11v16H5.5A1.5 1.5 0 0 1 4 18.5v-13Z"/><path d="M20 5.5c0-.8-.7-1.5-1.5-1.5H13v16h5.5a1.5 1.5 0 0 0 1.5-1.5v-13Z"/></svg></span>
+          <h3 class="achv-panel__title">Publications &amp; Patents</h3>
+          <span class="achv-panel__divider" aria-hidden="true"></span>
+        </div>
+
+        <div class="achv-row">
+          <span class="achv-row__icon achv-row__icon--lime"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.9 8 11 4.6-2.1 8-6 8-11V5l-8-3Z"/><path d="m9.5 12 1.8 1.8L15 10"/></svg></span>
+          <div class="achv-row__info">
+            <h4 class="achv-row__title">Published Patents</h4>
+            <p class="achv-row__desc">A curated collection of representative published patent applications spanning Artificial Intelligence, Cybersecurity, Distributed Computing, and Intelligent Systems.</p>
+          </div>
+          <button type="button" class="achv-row__btn achv-row__btn--lime" data-modal-open="modalPatents">
+            View Patents
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </button>
+        </div>
+
+        <div class="achv-row">
+          <span class="achv-row__icon achv-row__icon--purple"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z"/><path d="M14 3v5h5"/><path d="M9 13h6M9 17h6M9 9h1"/></svg></span>
+          <div class="achv-row__info">
+            <h4 class="achv-row__title">Research Paper <span class="achv-row__status">(Accepted)</span></h4>
+            <p class="achv-row__desc">&ldquo;No-Code and Low-Code: Democratizing Software Creation&rdquo;<br>Presented at <span class="achv-accent-text">ICISML 2026</span> &middot; Awaiting DOI</p>
+          </div>
+          <button type="button" class="achv-row__btn achv-row__btn--purple" data-modal-open="modalResearchPaper">
+            View Paper
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="achv-panel glass-card glass-card--lime">
+        <div class="achv-panel__header">
+          <span class="achv-panel__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="5.5"/><path d="m8.2 13-1.3 7.5L12 18l5.1 2.5L15.8 13"/></svg></span>
+          <h3 class="achv-panel__title">Certifications</h3>
+          <span class="achv-panel__divider" aria-hidden="true"></span>
+        </div>
+
+        <div class="achv-row">
+          <span class="achv-row__badge achv-row__badge--lime">H</span>
+          <div class="achv-row__info">
+            <h4 class="achv-row__title">HackerRank Software Engineer Intern</h4>
+            <p class="achv-row__meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Jul 2026</p>
+          </div>
+          <button type="button" class="achv-row__btn achv-row__btn--lime" data-cert-open
+            data-cert-image="content-to-add/certifications/hackerrank-software-engineer-intern.png"
+            data-cert-title="HackerRank Software Engineer Intern"
+            data-cert-meta='[{"label":"Platform","value":"HackerRank"},{"label":"Completed","value":"Jul 2026"}]'>
+            View Certificate
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </button>
+        </div>
+
+        <div class="achv-row">
+          <span class="achv-row__badge achv-row__badge--blue">IBM</span>
+          <div class="achv-row__info">
+            <h4 class="achv-row__title">IBM Advanced Gen AI Certification</h4>
+            <p class="achv-row__meta"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>May 2026 &ndash; Jun 2026</p>
+          </div>
+          <button type="button" class="achv-row__btn achv-row__btn--blue" data-cert-open
+            data-cert-image="content-to-add/certifications/ibm-advanced-genai-certification.png"
+            data-cert-title="IBM Advanced Gen AI Certification"
+            data-cert-meta='[{"label":"Platform","value":"IBM"},{"label":"Duration","value":"May 2026 &ndash; Jun 2026"}]'>
+            View Certificate
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </button>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="achv-quote-wrap">
+      <div class="achv-quote glass-card glass-card--lime">
+        <span class="achv-quote__icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v3a4 4 0 0 1-8 0V4Z"/><path d="M8 4H5v1.5A2.5 2.5 0 0 0 7.5 8M16 4h3v1.5A2.5 2.5 0 0 1 16.5 8"/><path d="M12 11v4"/><path d="M9 19.5h6"/><path d="M10 15.5h4l.6 2.2c.15.55-.27 1.1-.85 1.1H10.2c-.58 0-1-.55-.85-1.1L10 15.5Z"/></svg>
+        </span>
+        <p class="achv-quote__text">Every achievement is a <span class="accent">step forward.</span><span class="achv-quote__sub">Continuing the journey of learning, building and contributing.</span></p>
+        <span class="achv-quote__astro">
+          <picture>
+            <source srcset="assets/images/astronaut-sitting.webp" type="image/webp">
+            <img src="assets/images/astronaut-sitting.png" alt="" loading="lazy">
+          </picture>
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Patent Explorer: opened from "View Patents". Vertical list of
+     patents, each card laying its meta out horizontally. Every "View
+     Patent" link opens the official IP India portal directly in a
+     new tab — no in-site detail page. -->
+<div class="modal-overlay" id="modalPatents">
+  <div class="explorer explorer--patents">
+    <div class="terminal-modal__header">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename">patents.exe</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+
+    <div class="explorer__body patent-list">
+      <div class="explorer__intro" style="margin-bottom: 1.5rem;">
+        <h3 class="explorer__title">Published Patents</h3>
+        <p class="explorer__subtitle">A curated collection of representative published patent applications spanning Artificial Intelligence, Cybersecurity, Distributed Computing, and Intelligent Systems.</p>
+      </div>
+
+      <article class="patent-card">
+        <h4 class="patent-card__title">Hardware-Integrated Framework for Execution Fingerprint-Based Early Detection of Malicious Encryption Using Multi-Parameter Behavioral Analysis</h4>
+        <div class="patent-card__meta">
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Application Number</span>
+            <button type="button" class="patent-card__appnum" data-copy-appnum="202641063054">
+              <span class="patent-card__appnum-text">202641063054</span>
+              <svg class="patent-card__appnum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Published</span>
+            <span class="patent-card__meta-value">29 May 2026</span>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Research Domain</span>
+            <span class="patent-card__meta-value">Cybersecurity &bull; Artificial Intelligence</span>
+          </div>
+        </div>
+        <p class="patent-card__desc">Introduces a hardware-integrated behavioral security framework that detects malicious encryption during its earliest execution stages by analyzing processor activity, entropy variation, disk operations, and execution timing. The approach enables proactive ransomware detection before significant data loss occurs.</p>
+        <div class="patent-card__footer">
+          <a class="patent-card__link" href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/ApplicationStatus" target="_blank" rel="noopener noreferrer">
+            View Patent
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="patent-card">
+        <h4 class="patent-card__title">A Self-Healing Neural Network System for Detecting Model Drift and Performing Structural Recovery in a Real-Time Artificial Intelligence Environment</h4>
+        <div class="patent-card__meta">
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Application Number</span>
+            <button type="button" class="patent-card__appnum" data-copy-appnum="202641061209">
+              <span class="patent-card__appnum-text">202641061209</span>
+              <svg class="patent-card__appnum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Published</span>
+            <span class="patent-card__meta-value">29 May 2026</span>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Research Domain</span>
+            <span class="patent-card__meta-value">Artificial Intelligence</span>
+          </div>
+        </div>
+        <p class="patent-card__desc">Presents an adaptive AI framework capable of detecting model drift, diagnosing structural degradation, and autonomously restoring model performance without complete retraining, enabling resilient deployment in dynamic environments.</p>
+        <div class="patent-card__footer">
+          <a class="patent-card__link" href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/ApplicationStatus" target="_blank" rel="noopener noreferrer">
+            View Patent
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="patent-card">
+        <h4 class="patent-card__title">System and Method for Continuous Intent-Based Access Control in Zero Trust Networks Using Sequential Learning</h4>
+        <div class="patent-card__meta">
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Application Number</span>
+            <button type="button" class="patent-card__appnum" data-copy-appnum="202641051551">
+              <span class="patent-card__appnum-text">202641051551</span>
+              <svg class="patent-card__appnum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Published</span>
+            <span class="patent-card__meta-value">01 May 2026</span>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Research Domain</span>
+            <span class="patent-card__meta-value">Cybersecurity &bull; Zero Trust</span>
+          </div>
+        </div>
+        <p class="patent-card__desc">A continuous access control framework that evaluates evolving user intent using sequential behavioral learning, enabling dynamic authentication and adaptive authorization within Zero Trust architectures.</p>
+        <div class="patent-card__footer">
+          <a class="patent-card__link" href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/ApplicationStatus" target="_blank" rel="noopener noreferrer">
+            View Patent
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="patent-card">
+        <h4 class="patent-card__title">System and Method for Mitigating Application-Layer Denial-of-Service (DoS) Attacks Using Safe State Concurrency-Based Resource Allocation</h4>
+        <div class="patent-card__meta">
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Application Number</span>
+            <button type="button" class="patent-card__appnum" data-copy-appnum="202641047696">
+              <span class="patent-card__appnum-text">202641047696</span>
+              <svg class="patent-card__appnum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Published</span>
+            <span class="patent-card__meta-value">24 Apr 2026</span>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Research Domain</span>
+            <span class="patent-card__meta-value">Distributed Computing &bull; Cybersecurity</span>
+          </div>
+        </div>
+        <p class="patent-card__desc">Introduces a safe-state resource allocation mechanism that prevents application-layer resource exhaustion attacks while ensuring uninterrupted service availability for legitimate users.</p>
+        <div class="patent-card__footer">
+          <a class="patent-card__link" href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/ApplicationStatus" target="_blank" rel="noopener noreferrer">
+            View Patent
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </article>
+
+      <article class="patent-card">
+        <h4 class="patent-card__title">Dynamic Event-Driven Player Valuation System with Incremental Context-Aware Updating</h4>
+        <div class="patent-card__meta">
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Application Number</span>
+            <button type="button" class="patent-card__appnum" data-copy-appnum="202641031013">
+              <span class="patent-card__appnum-text">202641031013</span>
+              <svg class="patent-card__appnum-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>
+            </button>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Published</span>
+            <span class="patent-card__meta-value">27 Mar 2026</span>
+          </div>
+          <div class="patent-card__meta-item">
+            <span class="patent-card__meta-label">Research Domain</span>
+            <span class="patent-card__meta-value">Sports Analytics &bull; Artificial Intelligence</span>
+          </div>
+        </div>
+        <p class="patent-card__desc">A real-time player valuation framework that incrementally updates player value using contextual match events, eliminating the need for complete recalculation while supporting scalable decision-making.</p>
+        <div class="patent-card__footer">
+          <a class="patent-card__link" href="https://iprsearch.ipindia.gov.in/PublicSearch/PublicationSearch/ApplicationStatus" target="_blank" rel="noopener noreferrer">
+            View Patent
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+          </a>
+        </div>
+      </article>
+
+    </div>
+
+    <div class="explorer__footer">
+      <button class="btn btn-outline" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Research Paper popup: reuses the shared .modal component. Shows
+     "waiting for DOI" now — swap only the content, not the markup
+     shape, once the DOI/abstract/authors are available. -->
+<div class="modal-overlay" id="modalResearchPaper">
+  <div class="modal">
+    <div class="terminal-modal__header">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename">research_paper.pdf</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close">&times;</button>
+    </div>
+
+    <div class="modal__body">
+      <h4 class="paper-modal__title">No-Code and Low-Code: Democratizing Software Creation</h4>
+
+      <div class="paper-modal__row">
+        <span class="paper-modal__row-label">Conference</span>
+        <span class="paper-modal__row-value">International Conference on Intelligent Systems, Machine Learning and Data Science (ICISML 2026)</span>
+      </div>
+      <div class="paper-modal__row">
+        <span class="paper-modal__row-label">Publication Status</span>
+        <span class="paper-modal__row-value paper-modal__row-value--accent">Accepted &bull; Awaiting DOI</span>
+      </div>
+      <div class="paper-modal__row">
+        <span class="paper-modal__row-label">Description</span>
+        <span class="paper-modal__row-value">This research explores the evolution of No-Code and Low-Code development platforms, examining their impact on software development, accessibility, developer productivity, and modern application engineering.</span>
+      </div>
+
+      <div class="paper-modal__waiting">
+        <span class="paper-modal__waiting-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3.2 2"/></svg></span>
+        <div class="paper-modal__waiting-text">
+          <p class="paper-modal__waiting-title">Waiting for DOI&hellip;</p>
+          <p>The paper has been accepted and presented. The official publication link and DOI will be added once they are released by the publisher.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal__footer">
+      <button class="btn btn-outline" data-modal-close>Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== EDUCATION ============================ -->
+<section id="education">
+  <div class="section-inner edu-layout">
+
+    <div class="edu-left">
+      <p class="eyebrow">// Education</p>
+      <h2 class="section-heading">My <span class="accent">Academic</span><br>Journey</h2>
+      <p class="section-desc">A journey of consistent learning, hard work, and curiosity that shaped who I am today.</p>
+
+      <div class="edu-timeline">
+        <div class="edu-timeline__track" aria-hidden="true"></div>
+        <div class="edu-timeline__fill" id="eduTimelineFill" aria-hidden="true"></div>
+
+        <div class="edu-timeline__node edu-timeline__node--college" id="eduNodeCollege" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M2 9 12 4l10 5-10 5-10-5Z"/><path d="M6 12v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/><path d="M22 9v6"/></svg>
+        </div>
+        <article class="edu-card glass-card edu-card--college" data-edu-target="eduNodeCollege">
+          <p class="edu-card__eyebrow">College</p>
+          <h3 class="edu-card__title">Vellore Institute of Technology</h3>
+          <div class="edu-card__meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>Aug 2023 &ndash; Present</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Vellore, Tamil Nadu</span>
+          </div>
+          <div class="edu-card__divider" aria-hidden="true"></div>
+          <p class="edu-card__degree">Bachelor of Technology in Information Technology</p>
+          <p class="edu-card__score">CGPA: 9.15 / 10</p>
+        </article>
+
+        <div class="edu-timeline__node edu-timeline__node--school" id="eduNodeSchool" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/><path d="M9 7h7M9 11h7"/></svg>
+        </div>
+        <article class="edu-card glass-card edu-card--school" data-edu-target="eduNodeSchool">
+          <p class="edu-card__eyebrow">School</p>
+          <h3 class="edu-card__title">Chhattisgarh Public School</h3>
+          <div class="edu-card__meta">
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>2009 &ndash; 2023</span>
+            <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.1-7-11a7 7 0 0 1 14 0c0 4.9-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>Raipur, Chhattisgarh</span>
+          </div>
+          <div class="edu-card__divider" aria-hidden="true"></div>
+          <div class="edu-card__grades">
+            <span>Higher Secondary: <strong>87.60%</strong></span>
+            <span>Secondary: <strong>94.66%</strong></span>
+          </div>
+        </article>
+      </div>
+    </div>
+
+    <div class="edu-visual" aria-hidden="true">
+      <div class="edu-scene">
+        <svg class="edu-orbit edu-orbit--1" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" pathLength="100" stroke-dasharray="90 10"/></svg>
+        <svg class="edu-orbit edu-orbit--2" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" pathLength="100" stroke-dasharray="70 30"/></svg>
+        <svg class="edu-orbit edu-orbit--3" viewBox="0 0 100 100"><circle cx="50" cy="50" r="49" pathLength="100" stroke-dasharray="100 0"/></svg>
+
+        <div class="edu-orbit-spin edu-orbit-spin--1"><span class="edu-orbit-star"></span></div>
+        <div class="edu-orbit-spin edu-orbit-spin--2"><span class="edu-orbit-star edu-orbit-star--lime"></span></div>
+        <div class="edu-orbit-spin edu-orbit-spin--3"><span class="edu-orbit-star edu-orbit-star--sm"></span></div>
+
+        <picture>
+          <source srcset="assets/images/graduation.webp" type="image/webp">
+          <img class="edu-illustration" src="assets/images/graduation.png" alt="">
+        </picture>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================== CONTACT ============================== -->
+<section id="contact">
+  <div class="section-inner contact__grid">
+
+    <div class="contact__left">
+      <p class="eyebrow">// Get In Touch</p>
+      <h2 class="contact__heading">Let's build<br>something<br><span class="accent">amazing</span><br>together<span class="accent">.</span></h2>
+      <div class="contact__rule"></div>
+      <p class="contact__desc">Have a project in mind, a question, or just want to connect? I'd love to hear from you!</p>
+
+      <div class="contact__info">
+        <div class="contact__info-row">
+          <span class="contact__info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="4.5" width="19" height="15" rx="2"/><path d="m3 6 9 7 9-7"/></svg></span>
+          <span class="contact__info-value">vedanshgupta.off@gmail.com</span>
+        </div>
+        <div class="contact__info-row">
+          <span class="contact__info-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg></span>
+          <span class="contact__info-value">India</span>
+        </div>
+        <div class="contact__info-row">
+          <span class="contact__info-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 .5C5.73.5.98 5.24.98 11.5c0 4.98 3.23 9.2 7.72 10.69.56.1.77-.24.77-.54 0-.27-.01-1.15-.02-2.09-3.14.68-3.8-1.34-3.8-1.34-.51-1.3-1.25-1.64-1.25-1.64-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.62 1.22 3.26.93.1-.73.39-1.22.71-1.5-2.51-.29-5.15-1.25-5.15-5.57 0-1.23.44-2.24 1.16-3.03-.12-.29-.5-1.45.11-3.02 0 0 .95-.3 3.11 1.16a10.8 10.8 0 0 1 5.66 0c2.16-1.46 3.11-1.16 3.11-1.16.61 1.57.23 2.73.11 3.02.72.79 1.16 1.8 1.16 3.03 0 4.33-2.65 5.28-5.17 5.56.4.35.76 1.03.76 2.08 0 1.5-.01 2.71-.01 3.08 0 .3.2.65.78.54A11.02 11.02 0 0 0 23.02 11.5C23.02 5.24 18.27.5 12 .5Z"/></svg></span>
+          <span class="contact__info-value">github.com/Vedansh-Gupta-VG</span>
+        </div>
+        <div class="contact__info-row">
+          <span class="contact__info-icon"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.58c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.68H9.34V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29ZM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13ZM7.12 20.45H3.56V9h3.56v11.45Z"/></svg></span>
+          <span class="contact__info-value">linkedin.com/in/vedansh-gupta-ba298528a</span>
+        </div>
+      </div>
+
+      <div class="contact__ctas">
+        <a href="mailto:vedanshgupta.off@gmail.com" class="btn btn-primary">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          Send Message
+        </a>
+        <a href="https://drive.google.com/file/d/13iw_mfHcqMjfqELzbxsFTAMphkqEx-0Y/view?usp=sharing" target="_blank" rel="noopener" class="btn btn-outline">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+
+    <div class="contact__terminal">
+      <div class="contact__terminal-titlebar">
+        <div class="contact__terminal-dots"><span></span><span></span><span></span></div>
+        <span class="contact__terminal-filename">terminal.js</span>
+        <span class="contact__terminal-min">&minus;</span>
+      </div>
+      <div class="contact__terminal-body">
+        <p class="contact__terminal-intro">
+          <span class="prompt-line"><span class="prompt-user">vedansh@portfolio</span><span class="prompt-rest">:~$ connect</span></span>
+          <span class="prompt-line">Let's start a conversation!</span>
+          <span class="prompt-line">Please fill in the details below.</span>
+        </p>
+
+        <form id="contactForm" novalidate>
+          <div class="contact__field">
+            <label class="contact__field-label" for="contactName">name: ~</label>
+            <input type="text" id="contactName" name="name" placeholder="Enter your name" autocomplete="name">
+          </div>
+          <div class="contact__field">
+            <label class="contact__field-label" for="contactEmail">email: ~</label>
+            <input type="email" id="contactEmail" name="email" placeholder="Enter your email" autocomplete="email">
+          </div>
+          <div class="contact__field">
+            <label class="contact__field-label" for="contactMessage">message: ~</label>
+            <textarea id="contactMessage" name="message" placeholder="Write your message..."></textarea>
+          </div>
+
+          <!-- Honeypot spam trap: invisible to real visitors (off-screen, not
+               display:none, so basic bots that skip hidden fields still fill
+               it), tabindex/autocomplete disabled so it's never reached by
+               keyboard or autofill either. If this has a value on submit,
+               contact.js treats it as a bot and silently drops the send
+               without ever calling EmailJS. -->
+          <div class="contact__field contact__field--honeypot" aria-hidden="true">
+            <label for="contactWebsite">website</label>
+            <input type="text" id="contactWebsite" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="contact__send-btn" id="contactSendBtn">
+            &gt; send_message()
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+          </button>
+        </form>
+
+        <div class="contact__terminal-status" id="contactStatus">vedansh@portfolio:~$ Waiting for your message... <span class="contact__terminal-cursor"></span></div>
+      </div>
+    </div>
+
+    <div class="contact__right">
+      <div class="hud-panel hud-warning">
+        <span class="hud-warning__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 10v4M12 17h.01"/></svg></span>
+        <span class="hud-warning__text"><span class="hud-warning__line1">INCOMING ASTEROID</span><span class="hud-warning__line2">DETECTED</span></span>
+      </div>
+
+      <div class="hud-asteroid">
+        <span class="hud-asteroid__bracket hud-asteroid__bracket--tl"></span>
+        <span class="hud-asteroid__bracket hud-asteroid__bracket--tr"></span>
+        <span class="hud-asteroid__bracket hud-asteroid__bracket--bl"></span>
+        <span class="hud-asteroid__bracket hud-asteroid__bracket--br"></span>
+        <div class="hud-asteroid__ring" aria-hidden="true"></div>
+        <picture>
+          <source srcset="assets/images/asteroid-new.webp" type="image/webp">
+          <img class="hud-asteroid__img" src="assets/images/asteroid-new.png" alt="Incoming asteroid">
+        </picture>
+      </div>
+
+      <div class="hud-panel hud-data">
+        <div class="hud-data__row"><span class="hud-data__label">ID</span><span class="hud-data__sep">:</span><span class="hud-data__value">2026-VG-07</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">SIZE</span><span class="hud-data__sep">:</span><span class="hud-data__value">120 M</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">SPEED</span><span class="hud-data__sep">:</span><span class="hud-data__value">28.4 KM/S</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">DIST</span><span class="hud-data__sep">:</span><span class="hud-data__value">0.85 AU</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">ETA</span><span class="hud-data__sep">:</span><span class="hud-data__value">00:00:47</span></div>
+        <div class="hud-data__bar">
+          <span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span class="is-filled"></span><span></span><span></span><span></span>
+        </div>
+
+        <div class="hud-data__divider"></div>
+
+        <div class="hud-data__row"><span class="hud-data__label">THREAT</span><span class="hud-data__sep">:</span><span class="hud-data__value hud-data__value--critical">CRITICAL</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">COURSE</span><span class="hud-data__sep">:</span><span class="hud-data__value hud-data__value--critical">COLLISION</span></div>
+        <div class="hud-data__row"><span class="hud-data__label">ANGLE</span><span class="hud-data__sep">:</span><span class="hud-data__value">67.4&deg;</span></div>
+
+        <div class="hud-data__divider"></div>
+
+        <div class="hud-data__extra">
+          <div class="hud-data__traj">
+            <span class="hud-data__traj-label">TRAJECTORY</span>
+            <svg class="hud-data__traj-svg" viewBox="0 0 120 40" preserveAspectRatio="none">
+              <path d="M4 8 L70 8 L112 34" fill="none" stroke="var(--lime)" stroke-width="1.4" stroke-dasharray="3 3" opacity="0.75"/>
+              <circle cx="4" cy="8" r="3" fill="var(--lime)"/>
+              <circle cx="112" cy="34" r="4" fill="#ff5f57"/>
+              <circle cx="112" cy="34" r="7" fill="none" stroke="#ff5f57" stroke-width="1" opacity="0.6"/>
+            </svg>
+            <span class="hud-data__traj-tag">IMPACT ZONE</span>
+          </div>
+          <div class="hud-data__status">
+            <div class="hud-data__status-row">
+              <span class="hud-data__status-icon">&#9888;</span>
+              <span class="hud-data__status-label">COLLISION PROB</span>
+              <span class="hud-data__value hud-data__value--critical">87.4%</span>
+            </div>
+            <div class="hud-data__status-row">
+              <span class="hud-data__status-icon hud-data__status-icon--muted">&#9679;</span>
+              <span class="hud-data__status-label">DEFENSE SYS</span>
+              <span class="hud-data__value hud-data__value--muted">N/A</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================== END / MISSION CONTROL FOOTER ============================== -->
+<footer id="end">
+
+  <!-- ── Main HUD Panel ── -->
+  <div class="mc-panel" data-mc-animate>
+    <!-- Chamfered corner accents (SVG) -->
+    <svg class="mc-corner mc-corner--tl" viewBox="0 0 30 30"><polyline points="0,30 0,8 8,0 30,0" fill="none" stroke="var(--lime)" stroke-width="1.5"/></svg>
+    <svg class="mc-corner mc-corner--tr" viewBox="0 0 30 30"><polyline points="0,0 22,0 30,8 30,30" fill="none" stroke="var(--lime)" stroke-width="1.5"/></svg>
+    <svg class="mc-corner mc-corner--bl" viewBox="0 0 30 30"><polyline points="30,30 30,30 0,30 0,22 8,30" fill="none" stroke="var(--lime)" stroke-width="1.5"/><polyline points="0,0 0,22 8,30" fill="none" stroke="var(--lime)" stroke-width="1.5"/></svg>
+    <svg class="mc-corner mc-corner--br" viewBox="0 0 30 30"><polyline points="30,0 30,22 22,30 0,30" fill="none" stroke="var(--lime)" stroke-width="1.5"/></svg>
+
+    <!-- ── Mission Control Header ── -->
+    <div class="mc-header">
+      <div class="mc-header__line">
+        <span class="mc-header__marker"></span>
+        <span class="mc-header__rule"></span>
+        <span class="mc-header__tab">// MISSION CONTROL</span>
+        <span class="mc-header__rule"></span>
+        <span class="mc-header__marker"></span>
+      </div>
+    </div>
+
+    <!-- ── Four-Column Content ── -->
+    <div class="mc-content">
+
+      <!-- Column 1 — Identity -->
+      <div class="mc-col mc-col--identity" data-mc-animate>
+        <div class="mc-code-icon" aria-hidden="true">&lt;/&gt;</div>
+        <h2 class="mc-name">Vedansh <span class="accent">Gupta</span></h2>
+        <p class="mc-tagline">Building intelligent solutions<br>at the intersection of data,<br>code and creativity.</p>
+
+        <!-- Terminal widget -->
+        <div class="mc-terminal">
+          <div class="mc-terminal__header">
+            <span class="mc-terminal__dot mc-terminal__dot--red"></span>
+            <span class="mc-terminal__dot mc-terminal__dot--yellow"></span>
+            <span class="mc-terminal__dot mc-terminal__dot--green"></span>
+          </div>
+          <div class="mc-terminal__body">
+            <span class="mc-terminal__prompt">vedansh@portfolio:~$</span> <span class="mc-terminal__cmd">mission_complete</span><span class="mc-terminal__cursor">_</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vertical divider -->
+      <div class="mc-divider" aria-hidden="true"><span class="mc-divider__dot"></span></div>
+
+      <!-- Column 2 — Navigate -->
+      <div class="mc-col mc-col--nav" data-mc-animate>
+        <h3 class="mc-col__heading">NAVIGATE<span class="mc-col__heading-line"></span></h3>
+        <ul class="mc-nav-list">
+          <li><a href="#hero"><span class="mc-nav-arrow">&gt;</span>Home</a></li>
+          <li><a href="#about"><span class="mc-nav-arrow">&gt;</span>About</a></li>
+          <li><a href="#experience"><span class="mc-nav-arrow">&gt;</span>Experience</a></li>
+          <li><a href="#projects"><span class="mc-nav-arrow">&gt;</span>Projects</a></li>
+          <li><a href="#achievements"><span class="mc-nav-arrow">&gt;</span>Achievements</a></li>
+          <li><a href="#contact"><span class="mc-nav-arrow">&gt;</span>Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Vertical divider -->
+      <div class="mc-divider" aria-hidden="true"><span class="mc-divider__dot"></span></div>
+
+      <!-- Column 3 — Connect -->
+      <div class="mc-col mc-col--connect" data-mc-animate>
+        <h3 class="mc-col__heading">CONNECT<span class="mc-col__heading-line"></span></h3>
+        <ul class="mc-connect-list">
+          <li>
+            <a href="https://github.com/Vedansh-Gupta-VG" target="_blank" rel="noopener noreferrer">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+              GitHub
+            </a>
+          </li>
+          <li>
+            <a href="https://www.linkedin.com/in/vedansh-gupta-ba298528a" target="_blank" rel="noopener noreferrer">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              LinkedIn
+            </a>
+          </li>
+          <li>
+            <a href="https://x.com/Vedansh_Gupta_" target="_blank" rel="noopener noreferrer">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4l6.5 8L4 20h2l5.5-6.8L16 20h4l-6.8-8.5L19.5 4h-2l-5 6.2L8 4H4z"/></svg>
+              X (Twitter)
+            </a>
+          </li>
+          <li>
+            <a href="mailto:vedanshgupta.off@gmail.com">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              Email
+            </a>
+          </li>
+          <li>
+            <a href="https://www.instagram.com/vishu.__.v/" target="_blank" rel="noopener noreferrer">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg>
+              Instagram
+            </a>
+          </li>
+          <li>
+            <a href="https://t.me/Vedansh_Gupta_06" target="_blank" rel="noopener noreferrer">
+              <svg class="mc-connect-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4 20-7z"/></svg>
+              Telegram
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Vertical divider -->
+      <div class="mc-divider" aria-hidden="true"><span class="mc-divider__dot"></span></div>
+
+      <!-- Column 4 — Status -->
+      <div class="mc-col mc-col--status" data-mc-animate>
+        <h3 class="mc-col__heading">STATUS<span class="mc-col__heading-line"></span></h3>
+        <div class="mc-status-cards">
+          <!-- Card 1 -->
+          <div class="mc-status-card">
+            <span class="mc-status-card__indicator"></span>
+            <svg class="mc-status-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.42 4.58a5.4 5.4 0 0 0-7.65 0l-.77.78-.77-.78a5.4 5.4 0 0 0-7.65 0C1.46 6.7 1.33 10.28 4 13l8 8 8-8c2.67-2.72 2.54-6.3.42-8.42z"/><path d="M12 5.36V12m-3.5-3h7"/></svg>
+            <div class="mc-status-card__text">Open to<br>collaborations</div>
+          </div>
+          <!-- Card 2 -->
+          <div class="mc-status-card">
+            <span class="mc-status-card__indicator"></span>
+            <svg class="mc-status-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 6-5 6 5 6M16 6l5 6-5 6"/><path d="m14 4-4 16"/></svg>
+            <div class="mc-status-card__text">Building AI &amp;<br>data-driven products</div>
+          </div>
+          <!-- Card 3 -->
+          <div class="mc-status-card">
+            <span class="mc-status-card__indicator"></span>
+            <svg class="mc-status-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <div class="mc-status-card__text">All systems<br>operational</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Lower HUD Divider + Saturn Emblem ── -->
+    <div class="mc-lower-hud" aria-hidden="true">
+      <div class="mc-lower-hud__line mc-lower-hud__line--left">
+        <span class="mc-lower-hud__node"></span>
+        <span class="mc-lower-hud__node"></span>
+      </div>
+      <div class="mc-saturn">
+        <div class="mc-saturn__ring mc-saturn__ring--outer"></div>
+        <div class="mc-saturn__ring mc-saturn__ring--mid"></div>
+        <div class="mc-saturn__planet">
+          <svg viewBox="0 0 60 60" fill="none">
+            <circle cx="30" cy="30" r="14" stroke="var(--lime)" stroke-width="1.2" fill="rgba(121,239,117,0.06)"/>
+            <ellipse cx="30" cy="30" rx="26" ry="8" stroke="var(--lime)" stroke-width="0.8" opacity="0.7" transform="rotate(-20 30 30)"/>
+            <circle cx="30" cy="30" r="8" fill="rgba(121,239,117,0.12)"/>
+          </svg>
+        </div>
+        <div class="mc-saturn__ring mc-saturn__ring--inner"></div>
+      </div>
+      <div class="mc-lower-hud__line mc-lower-hud__line--right">
+        <span class="mc-lower-hud__node"></span>
+        <span class="mc-lower-hud__node"></span>
+      </div>
+    </div>
+
+    <p class="mc-thanks" data-mc-animate>[ Thanks for visiting! ]</p>
+
+    <!-- ── Bottom Bar ── -->
+    <div class="mc-bottom-bar">
+      <div class="mc-copyright">
+        <span class="mc-copyright__year">&copy; 2026 Vedansh Gupta</span>
+        <span class="mc-copyright__tagline">Designed &amp; Coded with
+          <svg class="mc-heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-10-9.3C.5 8.2 2.4 4.5 6 4c2.2-.3 4.2 1 6 3 1.8-2 3.8-3.3 6-3 3.6.5 5.5 4.2 4 7.7C19.5 16.4 12 21 12 21Z"/></svg>
+          in orbit
+        </span>
+      </div>
+      <a href="#hero" class="mc-return" id="returnToOrbit">
+        <span class="mc-return__text">RETURN TO ORBIT</span>
+        <span class="mc-return__btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+        </span>
+      </a>
+    </div>
+
+</div><!-- /.mc-panel -->
+</footer>
+
+</main>
+
+<!-- Document viewer: shared "supporting document" popup used by every
+     certificate / credential trigger. Shows the whole document as an
+     image (no PDF chrome, no scrollbar) inside a glass frame with
+     metadata above it. Closes on the X, click-outside, or Escape. -->
+<div class="modal-overlay" id="modalCertificate">
+  <div class="doc-viewer terminal-modal">
+    <div class="terminal-modal__header">
+      <div class="terminal-modal__dots"><span></span><span></span><span></span></div>
+      <span class="terminal-modal__filename" id="certModalTitleText">certificate.pdf</span>
+      <button class="terminal-modal__close" data-modal-close aria-label="Close document">&times;</button>
+    </div>
+
+    <div class="doc-viewer__content">
+      <div class="doc-viewer__meta">
+      <p class="doc-viewer__title" id="certModalTitle">Document</p>
+      <div class="doc-viewer__rows" id="certModalMeta"></div>
+    </div>
+
+    <div class="doc-viewer__frame">
+      <img id="certModalImage" src="" alt="">
+    </div>
+
+    <div class="doc-viewer__actions" id="certModalActions">
+      <a class="doc-viewer__action-btn" id="certDownloadBtn" href="#" download aria-label="Download document">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download
+      </a>
+    </div>
+    </div> <!-- end doc-viewer__content -->
+  </div>
+</div>
+
+<!-- EmailJS SDK: lets the contact form send real emails without needing a backend server -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="js/atmosphere.js"></script>
+<script src="js/interactions.js"></script>
+<script src="js/selection.js"></script>
+<script src="js/modal.js"></script>
+<script src="js/certificates.js"></script>
+<script src="js/experience.js"></script>
+<script src="js/projects-data.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/terminal.js"></script>
+<script src="js/achievements.js"></script>
+<script src="js/education.js"></script>
+<script src="js/contact.js"></script>
+<script src="js/end.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/hero.js"></script>
+</body>
+</html>

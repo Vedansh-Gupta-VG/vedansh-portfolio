@@ -1,0 +1,456 @@
+/* ==========================================================================
+   PROJECTS SECTION
+   Three featured project cards + "View All Projects" CTA. Clicking a card
+   (or a row inside the Project Explorer) opens the shared project-detail
+   modal, populated dynamically from js/projects-data.js.
+   ========================================================================== */
+
+#projects .section-inner { width: 100%; }
+#projects .eyebrow { margin-bottom: 0.4rem; }
+#projects .section-heading { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin-bottom: 0.5rem; }
+#projects .section-desc { margin-bottom: var(--sp-2); font-size: 0.92rem; }
+
+.projects__grid {
+  margin-top: var(--sp-2);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-3);
+  align-items: stretch;
+}
+
+@media (max-width: 900px) { .projects__grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px) { .projects__grid { grid-template-columns: 1fr; } }
+
+/* --- Featured project card --- */
+.project-card {
+  --card-accent: var(--lime);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+  height: 100%;
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 35%, var(--border-subtle));
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease);
+}
+
+.project-card:hover,
+.project-card:focus-visible {
+  transform: translateY(-7px);
+  border-color: var(--card-accent);
+  box-shadow: 0 0 34px -10px var(--card-accent), 0 18px 34px rgba(0, 0, 0, 0.4);
+}
+
+/* Shine effect moved to body to prevent image clipping */
+.project-card__body::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, color-mix(in srgb, var(--card-accent) 22%, transparent) 50%, transparent 60%);
+  background-size: 220% 220%;
+  background-position: -60% -60%;
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease), background-position 0s calc(var(--dur-fast) + 0.1s);
+}
+.project-card:hover .project-card__body::after {
+  opacity: 1;
+  background-position: 160% 160%;
+  transition: opacity var(--dur-fast) var(--ease), background-position 1.1s var(--ease);
+}
+
+/* Fixed-height, letterboxed image region — every card gets exactly the
+   same image area regardless of a screenshot's native aspect ratio, and
+   the full screenshot stays visible instead of being cropped. */
+.project-card__media {
+  position: relative;
+  width: 100%;
+  height: 128px;
+  flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--card-accent) 30%, var(--bg-panel-solid)), var(--bg-panel-solid));
+}
+
+.project-card__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  transition: transform 0.6s var(--ease);
+}
+.project-card__media .project-card__placeholder {
+  position: static;
+  width: 100%;
+  height: 100%;
+  transition: none;
+}
+.project-card:hover .project-card__media img,
+.project-card:hover .project-card__media .project-card__placeholder svg {
+  transform: scale(1.05);
+}
+
+.project-card__placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--card-accent) 55%, white 5%);
+}
+.project-card__placeholder svg { width: 28%; height: 28%; transition: transform 0.6s var(--ease); }
+
+.project-card__num {
+  position: absolute;
+  top: 0.7rem;
+  left: 0.7rem;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-primary);
+  background: rgba(8, 11, 16, 0.65);
+  border: 1px solid var(--card-accent);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+}
+
+.project-card__category {
+  position: absolute;
+  top: 0.7rem;
+  right: 0.7rem;
+  z-index: 1;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--card-accent);
+  background: rgba(8, 11, 16, 0.65);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 45%, transparent);
+  border-radius: 50%;
+  backdrop-filter: blur(6px);
+}
+.project-card__category svg { width: 0.95rem; height: 0.95rem; }
+
+/* Content block: fixed compact rhythm, CTA always anchored to the
+   bottom so all three cards line up regardless of description length. */
+.project-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.4rem;
+  padding: 0.85rem var(--sp-3) 0.9rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.project-card__title { font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); line-height: 1.25; }
+.project-card__desc {
+  color: var(--text-secondary);
+  font-size: 0.82rem;
+  line-height: 1.45;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.project-card__chips { display: flex; flex-wrap: wrap; gap: 0.3rem; min-height: 1.4rem; align-content: flex-start; }
+.project-card__chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 0.22rem 0.55rem;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.project-card__link {
+  margin-top: auto;
+  padding-top: 0.15rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--card-accent);
+  width: fit-content;
+}
+.project-card__link svg { width: 0.9rem; height: 0.9rem; transition: transform var(--dur-fast) var(--ease); }
+.project-card:hover .project-card__link svg { transform: translateX(4px); }
+
+/* --- View All Projects CTA: compact, centered, fit-content --- */
+.projects__view-all {
+  margin: var(--sp-3) auto 0;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: 0.75rem 1.5rem;
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.projects__view-all:hover { transform: translateY(-3px); box-shadow: var(--glow-lime); }
+
+.projects__view-all-left { display: flex; align-items: center; gap: 0.7rem; }
+.projects__view-all-icon {
+  width: 2.2rem;
+  height: 2.2rem;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lime);
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-md);
+}
+.projects__view-all-icon svg { width: 1.1rem; height: 1.1rem; }
+.projects__view-all-title { display: block; font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); white-space: nowrap; }
+.projects__view-all-sub { display: block; color: var(--text-secondary); font-size: 0.78rem; margin-top: 0.1rem; white-space: nowrap; }
+.projects__view-all-arrow { color: var(--lime); flex-shrink: 0; margin-left: 0.4rem; transition: transform var(--dur-fast) var(--ease); }
+.projects__view-all-arrow svg { width: 1.15rem; height: 1.15rem; }
+.projects__view-all:hover .projects__view-all-arrow { transform: translateX(6px); }
+
+@media (max-width: 480px) {
+  .projects__view-all { flex-wrap: wrap; justify-content: center; text-align: center; padding: 0.9rem 1.2rem; }
+  .projects__view-all-sub, .projects__view-all-title { white-space: normal; }
+}
+
+/* ==========================================================================
+   PROJECT EXPLORER (the "view all" popup — a scrollable list of the
+   remaining projects). Sits under the project-detail modal in the stack.
+   ========================================================================== */
+
+.explorer {
+  width: min(880px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55), var(--glow-lime);
+  overflow: hidden;
+  transform: scale(0.94) translateY(10px);
+  opacity: 0;
+  transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease);
+}
+.modal-overlay.is-open .explorer { transform: scale(1) translateY(0); opacity: 1; }
+
+.explorer:hover {
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.65), 0 0 35px rgba(121, 239, 117, 0.35);
+}
+
+.explorer__intro { margin-bottom: var(--sp-2); }
+.explorer__title { font-family: var(--font-display); font-size: 1.3rem; margin: 0 0 0.25rem; color: var(--text-primary); }
+.explorer__subtitle { color: var(--text-secondary); font-size: 0.85rem; max-width: 54ch; line-height: 1.6; margin: 0; }
+
+.explorer__body { padding: var(--modal-body-py) var(--modal-pad-x); flex: 1; min-height: 0; overflow-y: auto; display: flex; flex-direction: column; gap: var(--sp-2); }
+
+.explorer-row {
+  display: grid;
+  grid-template-columns: auto 100px 1fr;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: border-color var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.explorer-row:hover,
+.explorer-row:focus-visible {
+  transform: translateX(4px);
+  border-color: var(--row-accent, var(--lime));
+  box-shadow: 0 0 22px -10px var(--row-accent, var(--lime));
+}
+
+.explorer-row__links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+}
+.explorer-row__links a,
+.explorer-row__links button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--row-accent, var(--lime));
+  background: transparent;
+  border: none;
+  padding: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
+}
+.explorer-row__links a:hover,
+.explorer-row__links button:hover { text-decoration: underline; }
+.explorer-row__links svg { width: 0.85rem; height: 0.85rem; }
+
+.explorer-row__media {
+  width: 100px;
+  height: 70px;
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  background: linear-gradient(150deg, color-mix(in srgb, var(--row-accent, var(--lime)) 28%, var(--bg-panel-solid)), var(--bg-panel-solid));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: color-mix(in srgb, var(--row-accent, var(--lime)) 55%, white 5%);
+}
+.explorer-row__media img { width: 100%; height: 100%; object-fit: cover; }
+.explorer-row__media svg { width: 34%; height: 34%; }
+
+.explorer-row__title { font-family: var(--font-display); font-size: 1rem; color: var(--text-primary); }
+.explorer-row__desc { color: var(--text-secondary); font-size: 0.82rem; line-height: 1.55; margin: 0.2rem 0 0.45rem; }
+.explorer-row__chips { display: flex; flex-wrap: wrap; gap: 0.35rem; }
+.explorer-row__chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 999px;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+}
+
+.explorer__footer {
+  padding: 0.6rem var(--modal-pad-x);
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  display: flex;
+  justify-content: flex-end;
+}
+.explorer__footer .btn {
+  padding: 0.5rem 1.2rem;
+  font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   PROJECT DETAIL MODAL
+   One shared instance, refilled from JS on every open. Sits above the
+   explorer when opened from within it (higher z-index — see below).
+   ========================================================================== */
+
+#modalProject { z-index: 2100; }
+
+.pmodal {
+  --card-accent: var(--lime);
+  width: min(760px, 100%);
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--card-accent);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.6), 0 0 40px -10px var(--card-accent);
+  overflow: hidden;
+  transform: scale(0.94) translateY(10px);
+  opacity: 0;
+  transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease);
+}
+.modal-overlay.is-open .pmodal { transform: scale(1) translateY(0); opacity: 1; }
+
+
+
+.pmodal__progress-track {
+  position: absolute;
+  top: var(--sp-3);
+  bottom: var(--sp-3);
+  right: 6px;
+  z-index: 2;
+  width: 3px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+.pmodal__progress-fill {
+  width: 100%;
+  height: 0%;
+  background: var(--card-accent);
+  border-radius: 3px;
+  transition: height 0.1s linear;
+}
+
+.pmodal__scroll { flex: 1; min-height: 0; overflow-y: auto; }
+
+.pmodal__media { width: 100%; aspect-ratio: 16 / 9; overflow: hidden; background: var(--bg-panel-solid); }
+.pmodal__media img { width: 100%; height: 100%; object-fit: cover; }
+.pmodal__media .project-card__placeholder { position: static; width: 100%; height: 100%; }
+
+.pmodal__head { padding: var(--modal-body-py) var(--modal-pad-x) 0; }
+.pmodal__title { font-family: var(--font-display); font-size: 1.6rem; color: var(--text-primary); }
+.pmodal__subtitle { color: var(--card-accent); font-family: var(--font-mono); font-size: 0.9rem; margin-top: 0.3rem; }
+.pmodal__desc { color: var(--text-secondary); line-height: 1.7; margin-top: var(--sp-2); }
+
+
+
+.pmodal__section { padding: 0 var(--modal-pad-x); margin-bottom: var(--sp-3); }
+.pmodal__section h4 {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  margin-bottom: 0.6rem;
+}
+.pmodal__section p { color: var(--text-secondary); line-height: 1.75; }
+
+.pmodal__list { display: flex; flex-direction: column; gap: 0.5rem; }
+.pmodal__list li { color: var(--text-secondary); line-height: 1.6; padding-left: 1.1rem; position: relative; }
+.pmodal__list li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--card-accent);
+}
+
+.pmodal__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.pmodal__chip {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 999px;
+  color: var(--text-primary);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 45%, var(--border-subtle));
+  background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+}
+
+.pmodal__footer {
+  padding: var(--modal-footer-py) var(--modal-pad-x) var(--sp-3);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--sp-3);
+}
+.pmodal__footer-actions {
+  display: flex;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+}
+.pmodal__footer-actions .btn svg { width: 1rem; height: 1rem; margin-right: 0.4rem; }
+
+@media (max-width: 640px) {
+  .explorer-row { grid-template-columns: 80px 1fr; }
+  .explorer-row__media { grid-row: 1; grid-column: 1; width: 80px; height: 60px; }
+  .explorer-row__info { grid-row: 1; grid-column: 2; }
+  .explorer-row__links { grid-row: 2; grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: var(--sp-2); }
+  .pmodal { max-height: 92vh; }
+  .pmodal__progress-track { display: none; }
+}

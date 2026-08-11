@@ -1,0 +1,265 @@
+/* ==========================================================================
+   EXPERIENCE SECTION
+   Left: glowing dashed timeline with two milestone nodes, connected to
+   each card by a short horizontal line. Right: two compact glass cards
+   (work = lime accent, leadership = blue accent).
+   ========================================================================== */
+
+#experience .eyebrow { margin-bottom: 0.4rem; }
+#experience .section-heading { font-size: clamp(1.7rem, 3.4vw, 2.4rem); margin-bottom: 0.5rem; }
+#experience .section-desc { margin-bottom: 1.1rem; font-size: 0.92rem; }
+
+.exp-timeline {
+  position: relative;
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  row-gap: 0.65rem;
+  column-gap: calc(var(--sp-3) + 14px);
+  align-items: start;
+}
+
+/* --- Dashed vertical track (dim base) + bright scroll-linked fill --- */
+.exp-timeline__track {
+  position: absolute;
+  top: 22px;
+  bottom: 22px;
+  left: 21px;
+  width: 2px;
+  background: linear-gradient(180deg, rgba(121, 239, 117, 0.3) 0%, rgba(111, 227, 240, 0.3) 55%, rgba(111, 168, 255, 0.3) 100%);
+  -webkit-mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+  mask-image: repeating-linear-gradient(to bottom, #000 0 6px, transparent 6px 13px);
+}
+
+.exp-timeline__fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 0%;
+  background: linear-gradient(180deg, var(--lime) 0%, var(--cyan) 55%, var(--blue) 100%);
+  transition: height 0.15s linear;
+  box-shadow: 0 0 10px rgba(121, 239, 117, 0.5);
+}
+
+.exp-timeline__node {
+  position: relative;
+  z-index: 1;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-panel-solid);
+  flex-shrink: 0;
+  transition: box-shadow var(--dur-med) var(--ease), transform var(--dur-med) var(--ease);
+}
+
+/* Small underline stub right at the node — where the connector begins */
+.exp-timeline__node::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 100%;
+
+  /* Overlap by 1px so the line visibly meets the card's border rather
+     than stopping a hair short of it — kept small so it just touches
+     the edge and doesn't visibly cross into the card. */
+  width: calc(var(--sp-3) + 14px + 1px);
+  height: 2px;
+
+  background: currentColor;
+  transform: translateY(-50%);
+}
+
+.exp-timeline__node--work { border: 2px solid var(--lime); color: var(--lime); box-shadow: 0 0 10px rgba(121, 239, 117, 0.15); }
+.exp-timeline__node--lead { border: 2px solid var(--blue); color: var(--blue); box-shadow: 0 0 10px rgba(111, 168, 255, 0.15); }
+
+.exp-timeline__node--work.is-active { box-shadow: var(--glow-lime); }
+.exp-timeline__node--lead.is-active { box-shadow: var(--glow-blue); }
+
+.exp-timeline__node svg { width: 18px; height: 18px; transition: transform var(--dur-med) var(--ease); }
+
+/* Active pop is applied to the icon only, not the node box — the node's
+   outer edge (and the connector line anchored to it) must stay a fixed
+   size so the line always lands exactly on the card border. */
+.exp-timeline__node.is-active svg { transform: scale(1.15); }
+
+/* Soft pulsing glow on hover, per the reference notes */
+.exp-timeline__node:hover { animation: expNodePulse 1.4s ease-in-out infinite; }
+
+@keyframes expNodePulse {
+  0%, 100% { box-shadow: 0 0 8px currentColor; }
+  50% { box-shadow: 0 0 20px currentColor; }
+}
+
+/* --- Cards --- */
+.exp-card {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+
+  padding: 0.85rem 1.3rem;
+  border-radius: var(--radius-lg);
+
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.6s var(--ease), transform 0.6s var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+
+.exp-card.is-inview { opacity: 1; transform: translateY(0); }
+.exp-card.is-inview:hover { transform: translateY(-4px); }
+
+/* Short horizontal connector reaching from the node into the card */
+
+.exp-card--work { border-color: var(--border-lime); box-shadow: var(--shadow-card), 0 0 30px -18px rgba(121, 239, 117, 0.4); }
+.exp-card--work.is-inview:hover { box-shadow: var(--shadow-card), 0 0 40px -12px rgba(121, 239, 117, 0.45); }
+
+.exp-card--lead { border-color: rgba(111, 168, 255, 0.35); box-shadow: var(--shadow-card), 0 0 30px -18px rgba(111, 168, 255, 0.4); }
+.exp-card--lead.is-inview:hover { box-shadow: var(--shadow-card), 0 0 40px -12px rgba(111, 168, 255, 0.45); }
+
+.exp-card__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  flex-wrap: wrap;
+  margin-bottom: 0.6rem;
+}
+
+.exp-card__eyebrow {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0 0 0.35rem;
+}
+.exp-card__eyebrow--lime { color: var(--lime); }
+.exp-card__eyebrow--blue { color: var(--blue); }
+
+.exp-card__company {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  margin: 0 0 0.15rem;
+}
+
+.exp-card__role-title {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* --- "Verified Document" button --- */
+.exp-card__doc-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.42rem 0.8rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+  flex-shrink: 0;
+  transition: border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease);
+}
+.exp-card__doc-btn:hover { transform: translateY(-2px); }
+
+.exp-card__doc-icon { width: 20px; height: 20px; flex-shrink: 0; }
+
+.exp-card__doc-text { display: flex; flex-direction: column; align-items: flex-start; line-height: 1.25; }
+
+.exp-card__doc-label { font-size: 0.72rem; color: var(--text-muted); }
+
+.exp-card__doc-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.86rem;
+}
+.exp-card__doc-cta svg { width: 13px; height: 13px; }
+
+.exp-card__doc-btn--lime .exp-card__doc-icon,
+.exp-card__doc-btn--lime .exp-card__doc-cta { color: var(--lime); }
+.exp-card__doc-btn--lime:hover { border-color: var(--border-lime); background: rgba(121, 239, 117, 0.06); }
+
+.exp-card__doc-btn--blue .exp-card__doc-icon,
+.exp-card__doc-btn--blue .exp-card__doc-cta { color: var(--blue); }
+.exp-card__doc-btn--blue:hover { border-color: rgba(111, 168, 255, 0.5); background: rgba(111, 168, 255, 0.08); }
+
+/* --- Meta row: location • duration --- */
+.exp-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+}
+.exp-card__meta span:not(.exp-card__meta-sep) { display: inline-flex; align-items: center; gap: 0.4rem; }
+.exp-card__meta svg { width: 14px; height: 14px; color: var(--text-muted); flex-shrink: 0; }
+.exp-card__meta-sep { color: var(--text-muted); }
+
+/* --- Bullets, staggered fade-in once the card is in view --- */
+.exp-card__points { display: flex; flex-direction: column; gap: 0.28rem; margin-bottom: 0.55rem; }
+
+.exp-card__points li {
+  position: relative;
+  padding-left: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  font-size: 0.84rem;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.45s var(--ease), transform 0.45s var(--ease);
+}
+.exp-card.is-inview .exp-card__points li { opacity: 1; transform: translateY(0); }
+.exp-card.is-inview .exp-card__points li:nth-child(1) { transition-delay: 0.1s; }
+.exp-card.is-inview .exp-card__points li:nth-child(2) { transition-delay: 0.22s; }
+.exp-card.is-inview .exp-card__points li:nth-child(3) { transition-delay: 0.34s; }
+.exp-card.is-inview .exp-card__points li:nth-child(4) { transition-delay: 0.46s; }
+
+.exp-card__points li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.65em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+}
+.exp-card--work .exp-card__points li::before { background: var(--lime); }
+.exp-card--lead .exp-card__points li::before { background: var(--blue); }
+
+.exp-highlight { font-weight: 600; }
+.exp-highlight--lime { color: var(--lime); }
+
+/* --- Technology / skill chips --- */
+.exp-card__chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+
+.exp-chip {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 0.3rem 0.65rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), border-color var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease), color var(--dur-fast) var(--ease);
+}
+.exp-chip:hover { transform: translateY(-2px); }
+
+.exp-chip--lime { border-color: rgba(121, 239, 117, 0.3); color: var(--lime); background: rgba(121, 239, 117, 0.05); }
+.exp-chip--lime:hover { border-color: var(--lime); box-shadow: 0 4px 12px rgba(121, 239, 117, 0.2); background: rgba(121, 239, 117, 0.12); color: var(--lime); }
+
+.exp-chip--blue { border-color: rgba(111, 168, 255, 0.3); color: var(--blue); background: rgba(111, 168, 255, 0.05); }
+.exp-chip--blue:hover { border-color: var(--blue); box-shadow: 0 4px 12px rgba(111, 168, 255, 0.2); background: rgba(111, 168, 255, 0.12); color: var(--blue); }
+
+@media (max-width: 720px) {
+  /* Keep timeline visible on mobile but tighten the gaps */
+  .exp-timeline { column-gap: var(--sp-2); row-gap: var(--sp-3); }
+  .exp-card { padding: 0.85rem 1rem; }
+  .exp-timeline__node::after { width: calc(var(--sp-2) + 1px); } /* Shorten connector to match new gap */
+}

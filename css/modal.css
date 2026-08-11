@@ -1,0 +1,144 @@
+/* ==========================================================================
+   MODAL (shared component)
+   One reusable popup used for: About "more_about_me", certificate viewers,
+   project details, patent list, research paper. Single level — no nesting.
+   ========================================================================== */
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--sp-3);
+  background: rgba(5, 7, 10, 0.7);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--dur-med) var(--ease);
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+body.modal-open { overflow: hidden; }
+
+.modal {
+  width: min(720px, 100%);
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), var(--glow-lime);
+  overflow: hidden;
+  transform: scale(0.94) translateY(10px);
+  opacity: 0;
+  transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.modal:hover {
+  box-shadow: 0 25px 70px rgba(0, 0, 0, 0.6), var(--glow-lime);
+}
+
+.modal-overlay.is-open .modal {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.modal--wide { width: min(920px, 100%); max-height: 85vh; }
+
+.modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: var(--modal-header-py) var(--modal-pad-x);
+  border-bottom: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.modal__title { font-family: var(--font-display); font-size: 1.4rem; margin: 0 0 0.25rem; }
+.modal__subtitle { color: var(--lime); font-size: var(--fs-small); font-family: var(--font-mono); }
+
+.modal__close-x {
+  font-size: 1.5rem;
+  line-height: 1;
+  color: #ff5f57;
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), text-shadow var(--dur-fast) var(--ease);
+}
+.modal__close-x:hover {
+  color: #ff3b30;
+  text-shadow: 0 0 10px rgba(255, 59, 48, 0.5);
+  transform: rotate(90deg);
+}
+
+button[data-modal-close].btn-outline {
+  color: #ff5f57;
+  border-color: rgba(255, 95, 87, 0.4);
+}
+button[data-modal-close].btn-outline:hover {
+  color: #fff;
+  border-color: #ff3b30;
+  background: #ff3b30;
+  box-shadow: 0 0 15px rgba(255, 59, 48, 0.5);
+}
+
+.modal__body {
+  padding: var(--modal-body-py) var(--modal-pad-x);
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  color: var(--text-secondary);
+  line-height: 1.75;
+}
+
+.modal__body p { margin: 0 0 var(--sp-3); }
+.modal__body img { border-radius: var(--radius-md); margin-bottom: var(--sp-2); }
+.modal__body .accent { color: var(--lime); font-weight: 600; }
+.modal__body h4 {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin: var(--sp-3) 0 var(--sp-1);
+}
+.modal__body h4:first-child { margin-top: 0; }
+
+.modal-overlay.is-open .modal__body > * {
+  animation: modalFadeUp 0.45s var(--ease) both;
+}
+.modal-overlay.is-open .modal__body > *:nth-child(2) { animation-delay: 0.05s; }
+.modal-overlay.is-open .modal__body > *:nth-child(3) { animation-delay: 0.1s; }
+.modal-overlay.is-open .modal__body > *:nth-child(4) { animation-delay: 0.15s; }
+.modal-overlay.is-open .modal__body > *:nth-child(5) { animation-delay: 0.2s; }
+.modal-overlay.is-open .modal__body > *:nth-child(n+6) { animation-delay: 0.25s; }
+
+@keyframes modalFadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal__footer {
+  padding: 0.6rem var(--modal-pad-x);
+  border-top: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.015);
+  display: flex;
+  justify-content: center;
+}
+
+.modal__footer .btn { width: 100%; justify-content: center; }
+
+@media (max-width: 640px) {
+  .modal { max-height: 92vh; }
+}

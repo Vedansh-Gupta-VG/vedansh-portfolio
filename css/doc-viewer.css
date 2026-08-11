@@ -1,0 +1,162 @@
+/* ==========================================================================
+   DOCUMENT VIEWER
+   Shared popup for every "supporting document" (internship letters,
+   certificates). Shows the full document as an image, no PDF chrome,
+   no scrollbar, with a small metadata header above it.
+   ========================================================================== */
+
+/* Slightly stronger blur/overlay than the default modal-overlay, since
+   the whole point here is to make the document the sole focal point. */
+#modalCertificate {
+  background: rgba(5, 7, 10, 0.45);
+  backdrop-filter: blur(13px);
+  -webkit-backdrop-filter: blur(13px);
+}
+
+.doc-viewer {
+  position: relative;
+  width: fit-content;
+  max-width: 92vw;
+  display: flex;
+  flex-direction: column;
+  flex-direction: column;
+  gap: 0;
+  background: var(--bg-panel-solid);
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 70px rgba(0, 0, 0, 0.55), var(--glow-lime);
+  transform: scale(0.94) translateY(10px);
+  opacity: 0;
+  transition: transform var(--dur-med) var(--ease), opacity var(--dur-med) var(--ease);
+}
+
+.modal-overlay.is-open .doc-viewer {
+  transform: scale(1) translateY(0);
+  opacity: 1;
+}
+
+.doc-viewer__close {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.85rem;
+  width: 2.1rem;
+  height: 2.1rem;
+  font-size: 1.4rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #ff5f57;
+  background: rgba(255, 255, 255, 0.04);
+  transition: color var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.doc-viewer__close:hover {
+  color: #ff3b30;
+  transform: rotate(90deg);
+  box-shadow: 0 0 16px rgba(255, 59, 48, 0.35);
+}
+
+.doc-viewer__content {
+  padding: var(--modal-body-py) var(--modal-pad-x) var(--modal-footer-py);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  overflow-y: auto;
+}
+
+.doc-viewer__meta {
+  align-self: flex-start;
+}
+
+.doc-viewer__title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 0.4rem;
+}
+
+.doc-viewer__rows {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem 1.2rem;
+}
+
+.doc-viewer__row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+}
+
+.doc-viewer__row-label {
+  font-family: var(--font-mono);
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.72rem;
+}
+
+.doc-viewer__row-value { color: var(--text-secondary); }
+
+.doc-viewer__frame {
+  margin-top: 0.25rem;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-lime);
+  overflow: hidden;
+  background: #0d131b;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.doc-viewer__frame img {
+  display: block;
+  max-width: 90vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+@media (max-width: 640px) {
+  .doc-viewer { max-width: 96vw; }
+  .doc-viewer__content { padding: var(--modal-body-py) var(--sp-2) var(--modal-footer-py); }
+  .doc-viewer__frame img { max-width: 92vw; max-height: 60vh; }
+}
+
+/* --- Actions row: view/download buttons below the document --- */
+.doc-viewer__actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  align-self: center;
+}
+
+.doc-viewer__action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.82rem;
+  color: var(--lime);
+  padding: 0.45rem 0.85rem;
+  border: 1px solid var(--border-lime);
+  border-radius: var(--radius-sm);
+  background: rgba(121, 239, 117, 0.05);
+  transition: background var(--dur-fast) var(--ease), transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
+}
+.doc-viewer__action-btn:hover {
+  background: rgba(121, 239, 117, 0.12);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(121, 239, 117, 0.2);
+}
+.doc-viewer__action-btn svg {
+  width: 0.95rem;
+  height: 0.95rem;
+}
