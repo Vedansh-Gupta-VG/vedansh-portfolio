@@ -13,23 +13,14 @@
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   function resize() {
-    // The starfield's parent (.atmosphere) is position:fixed — it's a
-    // backdrop pinned to the viewport, not something that scrolls with
-    // the page. The canvas needs to match that: sizing it to the full
-    // page's scrollHeight while it's displayed at only the viewport's
-    // height was squashing everything drawn (stars, and especially
-    // click-triggered shooting stars) down into a thin band near the
-    // top of the screen. Sizing it to the viewport keeps what's drawn
-    // matching what's actually shown, and is also lighter to redraw.
+    // Canvas matches the viewport, not the full page — the backdrop is fixed, so it should be too.
     width = canvas.width = window.innerWidth;
     height = canvas.height = window.innerHeight;
     generateStars();
   }
 
   function generateStars() {
-    // Star count scales with viewport area. Small mobile screens are
-    // additionally capped lower since backdrop redraws are relatively
-    // more expensive on those devices.
+    // Count scales with viewport area; capped lower on mobile since redraws are costlier there.
     const rawCount = Math.floor((width * height) / 5000);
     const MAX_STARS = width <= 768 ? 220 : 450;
     const count = Math.min(rawCount, MAX_STARS);
@@ -57,12 +48,7 @@
     }
   }
 
-  // Manually trigger a shooting star from a specific point (used by
-  // click-triggered stars — see js/interactions.js, which picks a random
-  // x/y anywhere on screen before calling this, so the star doesn't
-  // visually tie itself to whatever was clicked). These are drawn
-  // noticeably brighter/thicker/longer than the ambient ones so a click
-  // clearly produces something, instead of blending into the background.
+  // Click-triggered shooting star — brighter/thicker than the ambient ones so it's clearly visible.
   function spawnShootingStarAt(x, y) {
     shootingStars.push({
       x, y,
@@ -108,10 +94,7 @@
 
         const grad = ctx.createLinearGradient(sh.x, sh.y, tailX, tailY);
         if (sh.bright) {
-          // Click-triggered star: brighter white core with a soft white
-          // glow and a thicker line so it reads clearly against busy
-          // backgrounds instead of getting lost like the faint ambient
-          // ones — same white palette as the ambient stars, just bolder.
+          // Bolder white glow for click-triggered stars.
           grad.addColorStop(0, `rgba(255, 255, 255, ${sh.life})`);
           grad.addColorStop(0.4, `rgba(255, 255, 255, ${sh.life * 0.75})`);
           grad.addColorStop(1, 'rgba(255, 255, 255, 0)');

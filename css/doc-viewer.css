@@ -5,11 +5,7 @@
    no scrollbar, with a small metadata header above it.
    ========================================================================== */
 
-/* Slightly stronger blur/overlay than the default modal-overlay, since
-   the whole point here is to make the document the sole focal point.
-   Scoped to .is-open (rather than the bare #modalCertificate id) so it
-   still starts blurless and fades in with the rest of the overlay,
-   instead of snapping to full blur instantly before the fade begins. */
+/* Stronger blur than the default overlay. Scoped to .is-open so it fades in instead of snapping on. */
 #modalCertificate.is-open {
   background: rgba(5, 7, 10, 0.45);
   backdrop-filter: blur(13px);

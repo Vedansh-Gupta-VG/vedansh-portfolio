@@ -123,12 +123,7 @@
   --hover-lift: -6px;
 }
 
-/* backdrop-filter blur is one of the most GPU-expensive CSS properties,
-   and this site applies it to every .glass-card (dozens of elements)
-   plus every modal overlay. Desktop GPUs shrug it off; mid-range phone
-   GPUs visibly struggle, which is the main source of the general
-   scroll/animation lag on mobile. Lowering the blur radius keeps the
-   frosted-glass look while cutting that cost substantially. */
+/* Lower blur on mobile — backdrop-filter is GPU-expensive and was the main source of scroll lag. */
 @media (max-width: 768px) {
   :root {
     --glass-blur: 7px;

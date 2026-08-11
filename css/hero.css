@@ -201,17 +201,10 @@
 
 /* --- Portrait Mobile & Tablets (3:4, 4:3, phones) --- */
 @media (max-width: 1024px) {
-  /* Hero fills exactly one screen (100dvh — the *dynamic* viewport unit,
-     which tracks the real visible area even as the browser's address
-     bar shows/hides, unlike static vh). Content is sized and spaced to
-     actually fill that space on its own — astronaut + text + icons add
-     up close to a full screen — instead of either (a) forcing 100vh and
-     centering a much-shorter content block, which leaves big dead-air
-     gaps top and bottom, or (b) sizing the hero to content only, which
-     lets the About section peek into view before the user scrolls. */
+  /* Fills one screen (100dvh tracks real visible area, unlike static vh). */
   .hero {
     min-height: 100dvh;
-    padding-top: calc(var(--nav-height) + 1.75rem);
+    padding-top: calc(var(--nav-height) + 1.5rem);
     padding-bottom: 2rem;
     justify-content: center;
   }
@@ -219,7 +212,7 @@
     flex-direction: column; 
     align-items: center; 
     text-align: center; 
-    gap: 2rem; 
+    gap: 1.75rem; 
   }
   .hero__inner { 
     flex: none; 
@@ -231,20 +224,21 @@
     align-items: center;
   }
   
-  .hero__greeting { margin-bottom: 0.5rem; font-size: clamp(1rem, 3vw, 1.15rem); }
-  .hero__name { margin-bottom: 0.5rem; font-size: clamp(2.3rem, 9.5vw, 4.6rem); }
-  .hero__typewriter { margin-bottom: 1.1rem; font-size: clamp(1.1rem, 4.8vw, 1.7rem); }
-  .hero__headline { margin-bottom: 1.75rem; font-size: clamp(1.02rem, 4.2vw, 1.45rem); max-width: 500px; line-height: 1.55; }
-  .hero__ctas { justify-content: center; margin-bottom: 0; }
+  .hero__greeting { margin-bottom: 0.6rem; font-size: clamp(1.05rem, 3.2vw, 1.25rem); }
+  .hero__name { margin-bottom: 0.6rem; font-size: clamp(2.6rem, 11vw, 5.2rem); }
+  .hero__typewriter { margin-bottom: 1.2rem; font-size: clamp(1.3rem, 5.6vw, 2rem); }
+  .hero__headline { margin-bottom: 2rem; font-size: clamp(1.15rem, 4.8vw, 1.6rem); max-width: 520px; line-height: 1.55; }
+  .hero__ctas { justify-content: center; margin-bottom: 0; gap: 1rem; }
+  .hero__ctas .btn { padding: 1rem 1.9rem; font-size: 1rem; }
 
   .hero__astro { 
     flex: none; 
     order: -1; 
     width: 100%; 
-    height: clamp(19vh, 22vh, 27vh); /* Moderate size — not touching the nav, not dominating the screen */
+    height: clamp(15vh, 17vh, 20vh); /* smaller — text is the focal point, not the astronaut */
     justify-content: center; 
     padding-right: 0; 
-    margin-bottom: 0.5rem; /* extra breathing room before the text below */
+    margin-bottom: 0.5rem;
     position: relative;
   }
   .hero__astro svg,
@@ -274,8 +268,8 @@
   .social-rail::after { display: none; }
   .social-rail__dot { display: none; }
   .social-rail__icons { flex-direction: row; gap: 2rem; padding: 0; }
-  .social-rail__icons a { width: 34px; height: 34px; }
-  .social-rail__icons svg { width: 28px; height: 28px; }
+  .social-rail__icons a { width: 40px; height: 40px; }
+  .social-rail__icons svg { width: 32px; height: 32px; }
 }
 
 @media (min-width: 561px) and (max-width: 1024px) {

@@ -12,10 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  /* Adds the iPhone notch / home-indicator safe area on top of the
-     usual padding, so the card never renders flush against the status
-     bar or the bottom gesture bar — it was doing so on notched devices
-     since env(safe-area-inset-*) wasn't accounted for at all. */
+  /* Padding includes safe-area insets so the card clears iPhone notch/home-indicator areas. */
   padding: calc(var(--sp-3) + env(safe-area-inset-top)) calc(var(--sp-3) + env(safe-area-inset-right)) calc(var(--sp-3) + env(safe-area-inset-bottom)) calc(var(--sp-3) + env(safe-area-inset-left));
   background: rgba(5, 7, 10, 0.7);
   backdrop-filter: blur(0px);
