@@ -108,17 +108,18 @@
 
         const grad = ctx.createLinearGradient(sh.x, sh.y, tailX, tailY);
         if (sh.bright) {
-          // Click-triggered star: brighter core, a soft lime glow, and a
-          // thicker line so it reads clearly against busy backgrounds
-          // instead of getting lost like the faint ambient ones.
-          grad.addColorStop(0, `rgba(210, 255, 205, ${sh.life})`);
-          grad.addColorStop(0.4, `rgba(121, 239, 117, ${sh.life * 0.7})`);
-          grad.addColorStop(1, 'rgba(121, 239, 117, 0)');
+          // Click-triggered star: brighter white core with a soft white
+          // glow and a thicker line so it reads clearly against busy
+          // backgrounds instead of getting lost like the faint ambient
+          // ones — same white palette as the ambient stars, just bolder.
+          grad.addColorStop(0, `rgba(255, 255, 255, ${sh.life})`);
+          grad.addColorStop(0.4, `rgba(255, 255, 255, ${sh.life * 0.75})`);
+          grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
           ctx.save();
-          ctx.shadowColor = `rgba(121, 239, 117, ${sh.life * 0.8})`;
+          ctx.shadowColor = `rgba(255, 255, 255, ${sh.life * 0.8})`;
           ctx.shadowBlur = 8;
           ctx.strokeStyle = grad;
-          ctx.lineWidth = 2.6;
+          ctx.lineWidth = 2.4;
           ctx.beginPath();
           ctx.moveTo(sh.x, sh.y);
           ctx.lineTo(tailX, tailY);

@@ -233,6 +233,7 @@
 .explorer {
   width: min(880px, 100%);
   max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   background: var(--bg-panel-solid);
@@ -349,6 +350,7 @@
   --card-accent: var(--lime);
   width: min(760px, 100%);
   max-height: 88vh;
+  max-height: 88dvh;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -453,6 +455,6 @@
   .explorer-row__media { grid-row: 1; grid-column: 1; width: 80px; height: 60px; }
   .explorer-row__info { grid-row: 1; grid-column: 2; }
   .explorer-row__links { grid-row: 2; grid-column: 1 / -1; flex-direction: row; flex-wrap: wrap; gap: var(--sp-2); }
-  .pmodal { max-height: 92vh; }
+  .pmodal { max-height: 92vh; max-height: 92dvh; }
   .pmodal__progress-track { display: none; }
 }

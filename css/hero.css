@@ -201,28 +201,25 @@
 
 /* --- Portrait Mobile & Tablets (3:4, 4:3, phones) --- */
 @media (max-width: 1024px) {
-  /* Intentionally NOT forcing min-height:100vh/100dvh here. Locking the
-     hero to the full viewport height and then vertically centering its
-     (shorter) content stack creates large dead-air gaps above the
-     astronaut and below the social icons whenever the rendered viewport
-     is taller than the content — which happens on plenty of ordinary
-     phones, and especially when a phone browser is set to "Request
-     Desktop Site" (the layout still matches this breakpoint, but the
-     reported viewport height ends up much taller than the content).
-     Sizing the hero to its own content instead means it never has more
-     empty space than the padding below actually calls for, on any
-     device or browser mode. */
+  /* Hero fills exactly one screen (100dvh — the *dynamic* viewport unit,
+     which tracks the real visible area even as the browser's address
+     bar shows/hides, unlike static vh). Content is sized and spaced to
+     actually fill that space on its own — astronaut + text + icons add
+     up close to a full screen — instead of either (a) forcing 100vh and
+     centering a much-shorter content block, which leaves big dead-air
+     gaps top and bottom, or (b) sizing the hero to content only, which
+     lets the About section peek into view before the user scrolls. */
   .hero {
-    min-height: auto;
-    padding-top: calc(var(--nav-height) + 1rem);
-    padding-bottom: 3rem;
-    justify-content: flex-start;
+    min-height: 100dvh;
+    padding-top: calc(var(--nav-height) + 1.75rem);
+    padding-bottom: 2rem;
+    justify-content: center;
   }
   .hero__layout { 
     flex-direction: column; 
     align-items: center; 
     text-align: center; 
-    gap: 1.5rem; 
+    gap: 2rem; 
   }
   .hero__inner { 
     flex: none; 
@@ -235,19 +232,19 @@
   }
   
   .hero__greeting { margin-bottom: 0.5rem; font-size: clamp(1rem, 3vw, 1.15rem); }
-  .hero__name { margin-bottom: 0.5rem; font-size: clamp(2.2rem, 9vw, 4.4rem); }
-  .hero__typewriter { margin-bottom: 1.1rem; font-size: clamp(1.05rem, 4.6vw, 1.6rem); }
-  .hero__headline { margin-bottom: 1.75rem; font-size: clamp(1rem, 4vw, 1.4rem); max-width: 500px; line-height: 1.55; }
+  .hero__name { margin-bottom: 0.5rem; font-size: clamp(2.3rem, 9.5vw, 4.6rem); }
+  .hero__typewriter { margin-bottom: 1.1rem; font-size: clamp(1.1rem, 4.8vw, 1.7rem); }
+  .hero__headline { margin-bottom: 1.75rem; font-size: clamp(1.02rem, 4.2vw, 1.45rem); max-width: 500px; line-height: 1.55; }
   .hero__ctas { justify-content: center; margin-bottom: 0; }
 
   .hero__astro { 
     flex: none; 
     order: -1; 
     width: 100%; 
-    height: clamp(18vh, 21vh, 26vh); /* Slightly smaller + moved up via reduced top padding */
+    height: clamp(19vh, 22vh, 27vh); /* Moderate size — not touching the nav, not dominating the screen */
     justify-content: center; 
     padding-right: 0; 
-    margin-bottom: 0;
+    margin-bottom: 0.5rem; /* extra breathing room before the text below */
     position: relative;
   }
   .hero__astro svg,

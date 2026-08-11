@@ -6,6 +6,7 @@
 .terminal-modal {
   width: min(760px, 100%);
   max-height: 90vh;
+  max-height: 90dvh;
   display: flex;
   flex-direction: column;
   background: #0b0f14;
@@ -293,7 +294,7 @@
 }
 
 @media (max-width: 640px) {
-  .terminal-modal { max-height: 92vh; }
+  .terminal-modal { max-height: 92vh; max-height: 92dvh; }
   .terminal-modal__main.is-visible { flex-direction: column; overflow-y: auto; }
   .terminal-modal__nav {
     width: 100%;

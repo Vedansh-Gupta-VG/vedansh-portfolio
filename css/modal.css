@@ -5,24 +5,30 @@
    ========================================================================== */
 
 .modal-overlay {
-  will-change: opacity;
+  will-change: opacity, backdrop-filter;
   position: fixed;
   inset: 0;
   z-index: 2000;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--sp-3);
+  /* Adds the iPhone notch / home-indicator safe area on top of the
+     usual padding, so the card never renders flush against the status
+     bar or the bottom gesture bar — it was doing so on notched devices
+     since env(safe-area-inset-*) wasn't accounted for at all. */
+  padding: calc(var(--sp-3) + env(safe-area-inset-top)) calc(var(--sp-3) + env(safe-area-inset-right)) calc(var(--sp-3) + env(safe-area-inset-bottom)) calc(var(--sp-3) + env(safe-area-inset-left));
   background: rgba(5, 7, 10, 0.7);
-  backdrop-filter: blur(6px);
-  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   opacity: 0;
   pointer-events: none;
-  transition: opacity var(--dur-med) var(--ease);
+  transition: opacity var(--dur-med) var(--ease), backdrop-filter var(--dur-med) var(--ease), -webkit-backdrop-filter var(--dur-med) var(--ease);
 }
 
 .modal-overlay.is-open {
   opacity: 1;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   pointer-events: auto;
 }
 
@@ -31,6 +37,7 @@ body.modal-open { overflow: hidden; }
 .modal {
   width: min(720px, 100%);
   max-height: 90vh;
+  max-height: 90dvh; /* tracks the real visible area as the address bar shows/hides */
   display: flex;
   flex-direction: column;
   background: var(--bg-panel-solid);
@@ -52,7 +59,7 @@ body.modal-open { overflow: hidden; }
   opacity: 1;
 }
 
-.modal--wide { width: min(920px, 100%); max-height: 85vh; }
+.modal--wide { width: min(920px, 100%); max-height: 85vh; max-height: 85dvh; }
 
 .modal__header {
   display: flex;
@@ -142,12 +149,18 @@ button[data-modal-close].btn-outline:hover {
 .modal__footer .btn { width: 100%; justify-content: center; }
 
 @media (max-width: 640px) {
-  .modal { max-height: 92vh; }
+  .modal { max-height: 92vh; max-height: 92dvh; }
 }
 
 @media (max-width: 768px) {
-  .modal-overlay {
+  .modal-overlay.is-open {
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
+  }
+}
+
+@media (max-width: 640px) {
+  .modal-overlay {
+    padding: calc(1.1rem + env(safe-area-inset-top)) calc(1.1rem + env(safe-area-inset-right)) calc(1.1rem + env(safe-area-inset-bottom)) calc(1.1rem + env(safe-area-inset-left));
   }
 }
