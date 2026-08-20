@@ -116,4 +116,11 @@ if (fs.existsSync(path.join(ROOT, 'content-to-add'))) {
   copyDir(path.join(ROOT, 'content-to-add'), path.join(DIST, 'content-to-add'));
 }
 
+// 5. Copy SEO files (robots.txt, sitemap.xml) as-is — search engines expect
+// these at the site root, so they must ship unmodified in dist/.
+['robots.txt', 'sitemap.xml'].forEach(f => {
+  const src = path.join(ROOT, f);
+  if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, f));
+});
+
 console.log('Done. dist/ is ready to deploy — 31 requests down to 2 (main.min.css + main.min.js).');
