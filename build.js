@@ -118,7 +118,7 @@ if (fs.existsSync(path.join(ROOT, 'content-to-add'))) {
 
 // 5. Copy SEO files (robots.txt, sitemap.xml) as-is — search engines expect
 // these at the site root, so they must ship unmodified in dist/.
-['robots.txt', 'sitemap.xml'].forEach(f => {
+['robots.txt', 'sitemap.xml', 'favicon.ico'].forEach(f => {
   const src = path.join(ROOT, f);
   if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, f));
 });
